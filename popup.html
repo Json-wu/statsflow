@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Browser History & Analytics Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <h1><img src="icons/icon48.png" alt="" class="header-icon"><span data-i18n="extName"></span></h1>
+        <button type="button" class="view-switch-btn" id="view-switch-btn" data-i18n-title="switchToStats">
+          <svg class="icon-chart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 20V10M12 20V4M6 20v-6"/>
+          </svg>
+          <svg class="icon-history hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 8v4l2 2"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+        </button>
+      </div>
+      <div class="stats-summary">
+        <span id="total-sites">Sites: 0</span>
+        <span id="total-visits">Visits: 0</span>
+      </div>
+    </header>
+    
+    <div id="history-view" class="view-content">
+    <div class="search-box">
+      <input type="text" id="search-input" data-i18n-placeholder="searchPlaceholder">
+    </div>
+    
+    <div class="filter-box">
+      <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="filter-btn" data-filter="today" data-i18n="filterToday">Today</button>
+      <button class="filter-btn" data-filter="week" data-i18n="filterWeek">Week</button>
+      <button class="filter-btn" data-filter="month" data-i18n="filterMonth">Month</button>
+    </div>
+    
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button type="button" class="toolbar-icon-btn export-btn" id="export-btn" data-i18n-title="exportCsv">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </button>
+        <button type="button" class="toolbar-icon-btn calendar-btn" id="calendar-btn" data-i18n-title="selectDate">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </button>
+        <span id="date-badge" class="date-badge hidden"></span>
+      </div>
+      <div class="toolbar-right">
+        <div class="sort-tabs">
+        <button type="button" class="sort-tab active" data-sort="time" data-i18n="sortByTime">Time</button>
+        <button type="button" class="sort-tab" data-sort="visits" data-i18n="sortByVisits">Visits</button>
+        </div>
+      </div>
+    </div>
+    
+    <div id="calendar-overlay" class="calendar-overlay hidden">
+      <div class="calendar-popup">
+        <div class="calendar-header">
+          <button type="button" class="calendar-nav" id="calendar-prev">‹</button>
+          <span id="calendar-month-title">2025年3月</span>
+          <button type="button" class="calendar-nav" id="calendar-next">›</button>
+        </div>
+        <div class="calendar-weekdays">
+          <span data-i18n="calendarSun"></span><span data-i18n="calendarMon"></span><span data-i18n="calendarTue"></span><span data-i18n="calendarWed"></span><span data-i18n="calendarThu"></span><span data-i18n="calendarFri"></span><span data-i18n="calendarSat"></span>
+        </div>
+        <div id="calendar-days" class="calendar-days"></div>
+      </div>
+    </div>
+    
+    <div id="history-list" class="history-list">
+      <div class="loading" data-i18n="loading">Loading...</div>
+    </div>
+    </div>
+    
+    <div id="settings-overlay" class="settings-overlay hidden">
+      <div class="settings-popup">
+        <div class="settings-header">
+          <h3 data-i18n="privacySettings">Privacy</h3>
+          <button type="button" class="settings-close" id="settings-close">×</button>
+        </div>
+        <div class="settings-section">
+          <label data-i18n="blacklistLabel">Blacklist</label>
+          <div class="blacklist-input-row">
+            <input type="text" id="blacklist-input" data-i18n-placeholder="blacklistPlaceholder">
+            <button type="button" id="blacklist-add" data-i18n="add">Add</button>
+          </div>
+          <ul id="blacklist-list" class="blacklist-list"></ul>
+        </div>
+      </div>
+    </div>
+    
+    <div id="stats-view" class="view-content hidden">
+    <div class="stats-filter-box">
+      <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="filter-btn" data-filter="today" data-i18n="filterToday">Today</button>
+      <button class="filter-btn" data-filter="week" data-i18n="filterWeek">Week</button>
+      <button class="filter-btn" data-filter="month" data-i18n="filterMonth">Month</button>
+    </div>
+    <div id="trend-chart" class="trend-chart">
+      <div class="trend-chart-header">
+        <span class="trend-chart-title" data-i18n="trendChartTitle">Trend</span>
+        <div class="trend-tabs">
+          <button type="button" class="trend-tab active" data-trend="day" data-i18n="trendByDay">Day</button>
+          <button type="button" class="trend-tab" data-trend="week" data-i18n="trendByWeek">Week</button>
+        </div>
+      </div>
+      <div id="trend-chart-bars" class="trend-chart-bars"></div>
+    </div>
+    
+    <div id="hour-chart" class="hour-chart">
+      <div class="hour-chart-title" data-i18n="hourChartTitle">By hour</div>
+      <div id="hour-chart-bars" class="hour-chart-bars"></div>
+    </div>
+    
+    <div id="category-chart" class="category-chart">
+      <div class="category-chart-title" data-i18n="categoryChartTitle">By category</div>
+      <div id="category-chart-bars" class="category-chart-bars"></div>
+    </div>
+    </div>
+  </div>
+  
+    <footer class="bottom-bar">
+      <div class="bottom-bar-left">
+        <button type="button" class="icon-btn icon-only settings-btn" id="settings-btn" data-i18n-title="privacySettings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5z"/>
+            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65A.488.488 0 0 0 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.5 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.5 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z"/>
+          </svg>
+        </button>
+        <button type="button" class="icon-btn icon-only theme-btn" id="theme-btn" data-i18n-title="toggleDarkMode">
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg class="icon-sun hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        </button>
+        <button type="button" class="icon-btn icon-only lang-btn" id="lang-btn" data-i18n-title="switchLanguage">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="bottom-bar-right">
+        <button type="button" class="icon-btn icon-only back-to-top-btn hidden" id="back-to-top-btn" data-i18n-title="backToTop">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+          </svg>
+        </button>
+      </div>
+  </footer>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
