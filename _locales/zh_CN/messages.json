@@ -78,7 +78,6 @@
   "dashPermStorage": { "message": "storage — 在本机保存主题、语言、黑名单等偏好设置。" },
   "dashPermFavicon": { "message": "favicon — 通过浏览器内置站点图标服务在列表中显示站点图标。" },
   "dashPermDownloads": { "message": "downloads — 在你导出 CSV 时保存文件。" },
-  "dashPermHostGitHub": { "message": "github.com 站点权限 — 仅在你从扩展内打开仓库链接时使用（例如发起网络请求）。" },
   "dashAboutLicenseHeading": { "message": "开源与授权说明" },
   "dashAboutLicenseBody": { "message": "源代码托管在 GitHub，使用、修改与再分发以该仓库中的许可文件为准。本扩展与 Google LLC 无关联。" },
   "dashAboutContactHeading": { "message": "联系我们" },

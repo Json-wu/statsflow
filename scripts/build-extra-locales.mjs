@@ -117,8 +117,6 @@ const ja = {
   dashPermStorage: 'storage — テーマ・言語・ブラックリストなど設定をこの端末に保存。',
   dashPermFavicon: 'favicon — ブラウザのファビコンサービスで一覧にアイコンを表示。',
   dashPermDownloads: 'downloads — エクスポート時に CSV を保存。',
-  dashPermHostGitHub:
-    'github.com — 拡張機能からリポジトリを開く場合などにのみ使用。',
   dashAboutLicenseHeading: 'ライセンス',
   dashAboutLicenseBody:
     'ソースは GitHub で公開。利用・改変・再配布はリポジトリのライセンスに従います。Google とは無関係です。',
@@ -269,7 +267,6 @@ const ru = {
   dashPermStorage: 'storage — тема, язык, чёрный список только на устройстве.',
   dashPermFavicon: 'favicon — иконки сайтов через встроенный сервис браузера.',
   dashPermDownloads: 'downloads — сохранение CSV при экспорте.',
-  dashPermHostGitHub: 'github.com — только при открытии ссылки на репозиторий.',
   dashAboutLicenseHeading: 'Лицензия',
   dashAboutLicenseBody:
     'Исходный код на GitHub. Условия — в файле лицензии репозитория. Не связано с Google.',
@@ -420,7 +417,6 @@ const id = {
   dashPermStorage: 'storage — Menyimpan preferensi di perangkat ini saja.',
   dashPermFavicon: 'favicon — Memuat ikon situs melalui layanan favicon bawaan browser.',
   dashPermDownloads: 'downloads — Menyimpan file CSV saat ekspor.',
-  dashPermHostGitHub: 'github.com — Hanya saat membuka tautan repositori dari ekstensi.',
   dashAboutLicenseHeading: 'Lisensi',
   dashAboutLicenseBody:
     'Kode sumber di GitHub. Penggunaan mengikuti berkas lisensi di repositori. Bukan afiliasi Google.',
@@ -571,7 +567,6 @@ const ar = {
   dashPermStorage: 'storage — حفظ التفضيلات على هذا الجهاز فقط.',
   dashPermFavicon: 'favicon — تحميل أيقونات المواقع عبر خدمة المتصفح.',
   dashPermDownloads: 'downloads — حفظ ملفات CSV عند التصدير.',
-  dashPermHostGitHub: 'github.com — فقط عند فتح رابط المستودع من الإضافة.',
   dashAboutLicenseHeading: 'الترخيص',
   dashAboutLicenseBody:
     'الشفرة على GitHub. الاستخدام وفق ترخيص المستودع. غير تابع لـ Google.',
@@ -722,7 +717,6 @@ const es = {
   dashPermStorage: 'storage — Guarda preferencias solo en este dispositivo.',
   dashPermFavicon: 'favicon — Iconos mediante el servicio integrado del navegador.',
   dashPermDownloads: 'downloads — Guarda archivos CSV al exportar.',
-  dashPermHostGitHub: 'github.com — Solo al abrir el enlace del repositorio desde la extensión.',
   dashAboutLicenseHeading: 'Licencia',
   dashAboutLicenseBody:
     'Código en GitHub. Uso según la licencia del repositorio. No afiliado a Google.',
@@ -873,7 +867,6 @@ const pt_BR = {
   dashPermStorage: 'storage — Salva preferências apenas neste dispositivo.',
   dashPermFavicon: 'favicon — Ícones pelo serviço integrado do navegador.',
   dashPermDownloads: 'downloads — Salva arquivos CSV ao exportar.',
-  dashPermHostGitHub: 'github.com — Somente ao abrir o link do repositório pela extensão.',
   dashAboutLicenseHeading: 'Licença',
   dashAboutLicenseBody:
     'Código no GitHub. Uso conforme a licença do repositório. Não afiliado ao Google.',
@@ -1024,7 +1017,6 @@ const de = {
   dashPermStorage: 'storage — Speichert Einstellungen nur auf diesem Gerät.',
   dashPermFavicon: 'favicon — Lädt Symbole über den integrierten Favicon-Dienst.',
   dashPermDownloads: 'downloads — Speichert CSV-Dateien beim Export.',
-  dashPermHostGitHub: 'github.com — Nur beim Öffnen des Repo-Links aus der Erweiterung.',
   dashAboutLicenseHeading: 'Lizenz',
   dashAboutLicenseBody:
     'Quellcode auf GitHub. Nutzung gemäß Lizenzdatei im Repository. Nicht mit Google verbunden.',
@@ -1175,7 +1167,6 @@ const fr = {
   dashPermStorage: 'storage — Préférences stockées uniquement sur cet appareil.',
   dashPermFavicon: 'favicon — Icônes via le service intégré du navigateur.',
   dashPermDownloads: 'downloads — Enregistre les CSV lors de l’export.',
-  dashPermHostGitHub: 'github.com — Uniquement à l’ouverture du lien dépôt depuis l’extension.',
   dashAboutLicenseHeading: 'Licence',
   dashAboutLicenseBody:
     'Code sur GitHub. Usage selon la licence du dépôt. Non affilié à Google.',
@@ -1326,7 +1317,6 @@ const ko = {
   dashPermStorage: 'storage — 이 기기에만 테마·언어·차단 목록 등을 저장합니다.',
   dashPermFavicon: 'favicon — 브라우저 기본 파비콘 서비스로 아이콘을 불러옵니다.',
   dashPermDownloads: 'downloads — 내보내기 시 CSV 파일을 저장합니다.',
-  dashPermHostGitHub: 'github.com — 확장에서 저장소 링크를 열 때만 사용합니다.',
   dashAboutLicenseHeading: '라이선스',
   dashAboutLicenseBody:
     '소스는 GitHub에 있습니다. 사용·수정·배포는 해당 저장소 라이선스를 따릅니다. Google과 무관합니다.',

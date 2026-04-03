@@ -1771,13 +1771,6 @@ body.dark .dash-ws-del:hover {
   margin-bottom: 8px;
 }
 
-.dash-perm-host {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 0.9rem;
-  color: var(--dash-text-muted);
-}
-
 .dash-page-title {
   margin: 0 0 16px;
   font-size: clamp(1.35rem, 2.5vw, 1.65rem);

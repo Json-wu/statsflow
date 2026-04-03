@@ -236,9 +236,6 @@
   "dashPermDownloads": {
     "message": "downloads — Menyimpan file CSV saat ekspor."
   },
-  "dashPermHostGitHub": {
-    "message": "github.com — Hanya saat membuka tautan repositori dari ekstensi."
-  },
   "dashAboutLicenseHeading": {
     "message": "Lisensi"
   },

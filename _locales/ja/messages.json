@@ -236,9 +236,6 @@
   "dashPermDownloads": {
     "message": "downloads — エクスポート時に CSV を保存。"
   },
-  "dashPermHostGitHub": {
-    "message": "github.com — 拡張機能からリポジトリを開く場合などにのみ使用。"
-  },
   "dashAboutLicenseHeading": {
     "message": "ライセンス"
   },

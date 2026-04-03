@@ -78,7 +78,6 @@
   "dashPermStorage": { "message": "storage — Store your preferences on this device only (theme, language, blacklist, etc.)." },
   "dashPermFavicon": { "message": "favicon — Load site icons from the browser's built-in favicon service for the site list." },
   "dashPermDownloads": { "message": "downloads — Save CSV files when you use Export." },
-  "dashPermHostGitHub": { "message": "Host permission for github.com — Used only when you open the repository link from the extension." },
   "dashAboutLicenseHeading": { "message": "License & attribution" },
   "dashAboutLicenseBody": { "message": "Source code is available on GitHub. Use, modification, and distribution follow the license file in that repository. This extension is not affiliated with Google LLC." },
   "dashAboutContactHeading": { "message": "Contact us" },

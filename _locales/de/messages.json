@@ -236,9 +236,6 @@
   "dashPermDownloads": {
     "message": "downloads — Speichert CSV-Dateien beim Export."
   },
-  "dashPermHostGitHub": {
-    "message": "github.com — Nur beim Öffnen des Repo-Links aus der Erweiterung."
-  },
   "dashAboutLicenseHeading": {
     "message": "Lizenz"
   },

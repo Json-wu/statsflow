@@ -236,9 +236,6 @@
   "dashPermDownloads": {
     "message": "downloads — 내보내기 시 CSV 파일을 저장합니다."
   },
-  "dashPermHostGitHub": {
-    "message": "github.com — 확장에서 저장소 링크를 열 때만 사용합니다."
-  },
   "dashAboutLicenseHeading": {
     "message": "라이선스"
   },
