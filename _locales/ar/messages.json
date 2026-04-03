@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "متتبع سجل المتصفح والتحليلات"
+  },
+  "dashSidebarBrandName": {
+    "message": "تحليلات المتصفح"
+  },
+  "extDescription": {
+    "message": "تتبع مرئي للسجل: إحصائيات النطاقات، مخططات تفاعلية، تصدير CSV."
+  },
+  "switchToStats": {
+    "message": "الإحصائيات"
+  },
+  "switchToHistory": {
+    "message": "السجل"
+  },
+  "siteCount": {
+    "message": "مواقع"
+  },
+  "visitCount": {
+    "message": "زيارات"
+  },
+  "searchPlaceholder": {
+    "message": "ابحث عن المواقع أو الرابط"
+  },
+  "filterAll": {
+    "message": "الكل"
+  },
+  "filterHour": {
+    "message": "ساعة"
+  },
+  "filterToday": {
+    "message": "اليوم"
+  },
+  "filterWeek": {
+    "message": "أسبوع"
+  },
+  "filterMonth": {
+    "message": "شهر"
+  },
+  "exportCsv": {
+    "message": "تصدير CSV"
+  },
+  "selectDate": {
+    "message": "اختر التاريخ"
+  },
+  "sortByTime": {
+    "message": "وقت الزيارة"
+  },
+  "sortByVisits": {
+    "message": "عدد الزيارات"
+  },
+  "loading": {
+    "message": "جارٍ التحميل…"
+  },
+  "privacySettings": {
+    "message": "الخصوصية"
+  },
+  "blacklistLabel": {
+    "message": "قائمة النطاقات المحظورة (إخفاء السجل لهذه النطاقات)"
+  },
+  "blacklistPlaceholder": {
+    "message": "أدخل النطاق، مثل example.com"
+  },
+  "add": {
+    "message": "إضافة"
+  },
+  "remove": {
+    "message": "إزالة"
+  },
+  "trendChartTitle": {
+    "message": "زيارات يومية (آخر 7 أيام)"
+  },
+  "trendByDay": {
+    "message": "حسب اليوم"
+  },
+  "trendByWeek": {
+    "message": "حسب الأسبوع"
+  },
+  "hourChartTitle": {
+    "message": "توزيع وقت الزيارة"
+  },
+  "categoryChartTitle": {
+    "message": "حصة الزيارات حسب الفئة"
+  },
+  "backToTop": {
+    "message": "العودة للأعلى"
+  },
+  "toggleDarkMode": {
+    "message": "الوضع الداكن"
+  },
+  "toggleLightMode": {
+    "message": "الوضع الفاتح"
+  },
+  "switchLanguage": {
+    "message": "تغيير اللغة"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "عرض على GitHub"
+  },
+  "openExtensionPage": {
+    "message": "صفحة الإضافة"
+  },
+  "optionsPageTitle": {
+    "message": "حول هذه الإضافة"
+  },
+  "optionsVersionLabel": {
+    "message": "الإصدار"
+  },
+  "optionsLinksHeading": {
+    "message": "روابط"
+  },
+  "optionsPrivacy": {
+    "message": "سياسة الخصوصية"
+  },
+  "optionsFeaturesHeading": {
+    "message": "الميزات"
+  },
+  "optionsFeatDomains": {
+    "message": "تجميع السجل حسب النطاق الجذر؛ أيقونات المواقع؛ انقر لتوسيع قائمة الروابط والتفاصيل."
+  },
+  "optionsFeatStats": {
+    "message": "عدد الزيارات والصفحات وآخر زيارة وشريط الحصة ضمن المرشح الحالي."
+  },
+  "optionsFeatSort": {
+    "message": "ترتيب حسب آخر زيارة أو إجمالي الزيارات."
+  },
+  "optionsFeatFilter": {
+    "message": "مرشحات الوقت: الكل، اليوم، الأسبوع، الشهر (الافتراضي اليوم)."
+  },
+  "optionsFeatCalendar": {
+    "message": "تقويم ليوم واحد؛ شارة التاريخ تدل على مرشح يومي—انقر لإلغائه."
+  },
+  "optionsFeatViews": {
+    "message": "التبديل بين قائمة السجل وعرض الإحصائيات (مخططات)."
+  },
+  "optionsFeatTrend": {
+    "message": "مخطط أعمدة لآخر 7 أيام."
+  },
+  "optionsFeatHour": {
+    "message": "توزيع حسب الساعة 0–23 بمنحنى سلس حسب المرشح الحالي."
+  },
+  "optionsFeatCategory": {
+    "message": "رسم دائري للفئات؛ التسمية والشرائح تتفاعل عند التمرير."
+  },
+  "optionsFeatSearch": {
+    "message": "بحث في العناوين والروابط والنطاقات ضمن النطاق الزمني."
+  },
+  "optionsFeatExport": {
+    "message": "تصدير CSV (UTF-8 BOM): العنوان، النطاق، الزيارات، الصفحات، آخر وأول زيارة."
+  },
+  "optionsFeatPrivacy": {
+    "message": "القائمة السوداء؛ اقتراحات أثناء الكتابة؛ حذف سجل موقع كامل."
+  },
+  "optionsFeatTheme": {
+    "message": "مظهر فاتح/داكن. يتم حفظ اللغة في تخزين الإضافة (لغات متعددة)."
+  },
+  "optionsFeatFooter": {
+    "message": "تذييل: صفحة الإضافة، GitHub، العودة للأعلى. في بناء المطور قد يظهر قائمة لغة."
+  },
+  "dashChartsEyebrow": {
+    "message": "رؤى"
+  },
+  "dashNavHome": {
+    "message": "التحليلات"
+  },
+  "dashNavBlacklist": {
+    "message": "القائمة السوداء"
+  },
+  "dashNavAbout": {
+    "message": "حول"
+  },
+  "dashMenuOpen": {
+    "message": "فتح القائمة"
+  },
+  "dashSidebarCollapse": {
+    "message": "طي الشريط الجانبي"
+  },
+  "dashSidebarExpand": {
+    "message": "توسيع الشريط الجانبي"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "سجل التصفح"
+  },
+  "dashHomeTitle": {
+    "message": "مساحة الإحصائيات"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "نظرة على الميزات"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "الأذونات"
+  },
+  "dashPermHistory": {
+    "message": "history — قراءة السجل لإنشاء الإحصائيات؛ يمكنك حذف سجل موقع من الواجهة."
+  },
+  "dashPermStorage": {
+    "message": "storage — حفظ التفضيلات على هذا الجهاز فقط."
+  },
+  "dashPermFavicon": {
+    "message": "favicon — تحميل أيقونات المواقع عبر خدمة المتصفح."
+  },
+  "dashPermDownloads": {
+    "message": "downloads — حفظ ملفات CSV عند التصدير."
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — فقط عند فتح رابط المستودع من الإضافة."
+  },
+  "dashAboutLicenseHeading": {
+    "message": "الترخيص"
+  },
+  "dashAboutLicenseBody": {
+    "message": "الشفرة على GitHub. الاستخدام وفق ترخيص المستودع. غير تابع لـ Google."
+  },
+  "dashAboutContactHeading": {
+    "message": "اتصل بنا"
+  },
+  "dashAboutContactLink": {
+    "message": "إرسال بريد إلكتروني"
+  },
+  "dashPageStatus": {
+    "message": "صفحة $1 من $2 · $3 نطاق"
+  },
+  "dashUseRegex": {
+    "message": "Regex"
+  },
+  "dashChartDownload": {
+    "message": "تنزيل المخطط PNG"
+  },
+  "dashChartsColumnTitle": {
+    "message": "مخططات واتجاهات"
+  },
+  "dashPaginationPrev": {
+    "message": "السابق"
+  },
+  "dashPaginationNext": {
+    "message": "التالي"
+  },
+  "dashCalendarClose": {
+    "message": "إغلاق"
+  },
+  "dashPageSizeLabel": {
+    "message": "لكل صفحة"
+  },
+  "dashCollapseList": {
+    "message": "طي قائمة المواقع"
+  },
+  "dashExpandList": {
+    "message": "توسيع قائمة المواقع"
+  },
+  "dashPageNumbersLabel": {
+    "message": "أرقام الصفحات"
+  },
+  "noData": {
+    "message": "لا توجد بيانات"
+  },
+  "trendChartEmpty": {
+    "message": "لا زيارات في هذا النطاق. جرّب مرشحًا آخر أو «الكل»."
+  },
+  "hourChartEmpty": {
+    "message": "التوزيع بناءً على الزيارات المصفّاة"
+  },
+  "dashTrendTitleAll": {
+    "message": "زيارات يومية"
+  },
+  "dashTrendTitleHour": {
+    "message": "زيارات كل 5 دقائق (الساعة الأخيرة)"
+  },
+  "dashTrendTitleToday": {
+    "message": "زيارات بالساعة اليوم"
+  },
+  "dashTrendTitleWeek": {
+    "message": "زيارات يومية (7 أيام)"
+  },
+  "dashTrendTitleMonth": {
+    "message": "زيارات يومية (30 يومًا)"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "زيارات بالساعة (اليوم المحدد)"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "زيارات بالساعة (هذا اليوم)"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "الساعة الأخيرة بخطوات 5 دقائق"
+  },
+  "dashHourTitleByClock": {
+    "message": "زيارات بالساعة (0–23) ضمن النطاق"
+  },
+  "dashFiveMinSegment": {
+    "message": "فتحة 5 دقائق $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "تُكتشف الفئات تلقائيًا من النطاق"
+  },
+  "deleteSiteConfirm": {
+    "message": "حذف كل السجل لـ $domain$؟",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "انقر لإلغاء مرشح التاريخ"
+  },
+  "timeJustNow": {
+    "message": "الآن"
+  },
+  "timeMinutesAgo": {
+    "message": "منذ $1 د",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "منذ $1 س",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "منذ $1 يوم",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "الموقع,النطاق,الزيارات,الصفحات,آخر زيارة,أول زيارة"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1 صفحات",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1 زيارة",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "حذف سجل الموقع"
+  },
+  "category_search": {
+    "message": "بحث"
+  },
+  "category_social": {
+    "message": "تواصل"
+  },
+  "category_video": {
+    "message": "فيديو"
+  },
+  "category_shopping": {
+    "message": "تسوق"
+  },
+  "category_dev": {
+    "message": "تطوير"
+  },
+  "category_office": {
+    "message": "مكتب"
+  },
+  "category_news": {
+    "message": "أخبار"
+  },
+  "category_wiki": {
+    "message": "ويكي"
+  },
+  "category_other": {
+    "message": "أخرى"
+  },
+  "calendarSun": {
+    "message": "ح"
+  },
+  "calendarMon": {
+    "message": "ن"
+  },
+  "calendarTue": {
+    "message": "ث"
+  },
+  "calendarWed": {
+    "message": "ر"
+  },
+  "calendarThu": {
+    "message": "خ"
+  },
+  "calendarFri": {
+    "message": "ج"
+  },
+  "calendarSat": {
+    "message": "س"
+  }
+}

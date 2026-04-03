@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "ブラウザ履歴＆アナリティクストラッカー"
+  },
+  "dashSidebarBrandName": {
+    "message": "ブラウザアナリティクストラッカー"
+  },
+  "extDescription": {
+    "message": "閲覧履歴を可視化：ドメイン別統計、インタラクティブなチャート、CSV エクスポート。"
+  },
+  "switchToStats": {
+    "message": "統計へ切替"
+  },
+  "switchToHistory": {
+    "message": "履歴へ切替"
+  },
+  "siteCount": {
+    "message": "サイト"
+  },
+  "visitCount": {
+    "message": "訪問"
+  },
+  "searchPlaceholder": {
+    "message": "サイト・URL を検索"
+  },
+  "filterAll": {
+    "message": "すべて"
+  },
+  "filterHour": {
+    "message": "1時間"
+  },
+  "filterToday": {
+    "message": "今日"
+  },
+  "filterWeek": {
+    "message": "週"
+  },
+  "filterMonth": {
+    "message": "月"
+  },
+  "exportCsv": {
+    "message": "CSV エクスポート"
+  },
+  "selectDate": {
+    "message": "日付を選択"
+  },
+  "sortByTime": {
+    "message": "訪問日時"
+  },
+  "sortByVisits": {
+    "message": "訪問数"
+  },
+  "loading": {
+    "message": "読み込み中…"
+  },
+  "privacySettings": {
+    "message": "プライバシー設定"
+  },
+  "blacklistLabel": {
+    "message": "ドメインブラックリスト（これらのドメインの履歴を非表示）"
+  },
+  "blacklistPlaceholder": {
+    "message": "ドメインを入力（例: example.com）"
+  },
+  "add": {
+    "message": "追加"
+  },
+  "remove": {
+    "message": "削除"
+  },
+  "trendChartTitle": {
+    "message": "日別訪問（直近7日）"
+  },
+  "trendByDay": {
+    "message": "日別"
+  },
+  "trendByWeek": {
+    "message": "週別"
+  },
+  "hourChartTitle": {
+    "message": "訪問時間帯の分布"
+  },
+  "categoryChartTitle": {
+    "message": "カテゴリ別の訪問割合"
+  },
+  "backToTop": {
+    "message": "先頭へ"
+  },
+  "toggleDarkMode": {
+    "message": "ダークモードに切替"
+  },
+  "toggleLightMode": {
+    "message": "ライトモードに切替"
+  },
+  "switchLanguage": {
+    "message": "言語を切替"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "GitHub で見る"
+  },
+  "openExtensionPage": {
+    "message": "拡張機能ページ"
+  },
+  "optionsPageTitle": {
+    "message": "この拡張機能について"
+  },
+  "optionsVersionLabel": {
+    "message": "バージョン"
+  },
+  "optionsLinksHeading": {
+    "message": "リンク"
+  },
+  "optionsPrivacy": {
+    "message": "プライバシーポリシー"
+  },
+  "optionsFeaturesHeading": {
+    "message": "機能"
+  },
+  "optionsFeatDomains": {
+    "message": "ルートドメインごとに履歴をまとめます。サイトアイコン表示。クリックで URL 一覧と訪問詳細を展開。"
+  },
+  "optionsFeatStats": {
+    "message": "サイトごとの訪問数、ページ数、最終訪問、現在のフィルター内での割合バーを表示。"
+  },
+  "optionsFeatSort": {
+    "message": "最近の訪問順または訪問数順で並べ替え。"
+  },
+  "optionsFeatFilter": {
+    "message": "時間フィルター：すべて／今日／週／月（既定は今日）。"
+  },
+  "optionsFeatCalendar": {
+    "message": "カレンダーで日付を選択。バッジで日表示フィルター中。バッジをクリックで期間フィルターに戻る。"
+  },
+  "optionsFeatViews": {
+    "message": "ヘッダーから履歴リストと統計（チャート）ビューを切替。"
+  },
+  "optionsFeatTrend": {
+    "message": "直近7日間の訪問傾向を棒グラフで表示。"
+  },
+  "optionsFeatHour": {
+    "message": "0〜23時の訪問分布を、現在のフィルターに基づく滑らかな曲線とグラデーションで表示。"
+  },
+  "optionsFeatCategory": {
+    "message": "ドメインから推測したカテゴリの円グラフ。凡例とスライスをホバーで連動。"
+  },
+  "optionsFeatSearch": {
+    "message": "現在の期間内でタイトル・URL・ドメインを検索。"
+  },
+  "optionsFeatExport": {
+    "message": "フィルター済みリストを CSV（UTF-8 BOM）でエクスポート。タイトル、ドメイン、訪問数など。"
+  },
+  "optionsFeatPrivacy": {
+    "message": "ブラックリスト、入力時の履歴サジェスト、サイト単位での履歴削除。"
+  },
+  "optionsFeatTheme": {
+    "message": "ライト／ダークテーマ。言語は拡張機能の保存領域に保存（多言語対応）。"
+  },
+  "optionsFeatFooter": {
+    "message": "フッター：拡張ページ・GitHub・スクロール時の先頭へ。開発者向けビルドでは言語メニューが出る場合があります。"
+  },
+  "dashChartsEyebrow": {
+    "message": "インサイト"
+  },
+  "dashNavHome": {
+    "message": "分析"
+  },
+  "dashNavBlacklist": {
+    "message": "ブラックリスト"
+  },
+  "dashNavAbout": {
+    "message": "について"
+  },
+  "dashMenuOpen": {
+    "message": "メニューを開く"
+  },
+  "dashSidebarCollapse": {
+    "message": "サイドバーを閉じる"
+  },
+  "dashSidebarExpand": {
+    "message": "サイドバーを開く"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "閲覧履歴"
+  },
+  "dashHomeTitle": {
+    "message": "統計ワークスペース"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "機能概要"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "権限"
+  },
+  "dashPermHistory": {
+    "message": "history — 統計のため閲覧履歴を読み取ります。UI からサイトの履歴を削除できます。"
+  },
+  "dashPermStorage": {
+    "message": "storage — テーマ・言語・ブラックリストなど設定をこの端末に保存。"
+  },
+  "dashPermFavicon": {
+    "message": "favicon — ブラウザのファビコンサービスで一覧にアイコンを表示。"
+  },
+  "dashPermDownloads": {
+    "message": "downloads — エクスポート時に CSV を保存。"
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — 拡張機能からリポジトリを開く場合などにのみ使用。"
+  },
+  "dashAboutLicenseHeading": {
+    "message": "ライセンス"
+  },
+  "dashAboutLicenseBody": {
+    "message": "ソースは GitHub で公開。利用・改変・再配布はリポジトリのライセンスに従います。Google とは無関係です。"
+  },
+  "dashAboutContactHeading": {
+    "message": "お問い合わせ"
+  },
+  "dashAboutContactLink": {
+    "message": "メールを送る"
+  },
+  "dashPageStatus": {
+    "message": "$2 ページ中 $1 ページ目 · ドメイン $3 件"
+  },
+  "dashUseRegex": {
+    "message": "正規表現"
+  },
+  "dashChartDownload": {
+    "message": "チャートを PNG で保存"
+  },
+  "dashChartsColumnTitle": {
+    "message": "チャートと傾向"
+  },
+  "dashPaginationPrev": {
+    "message": "前へ"
+  },
+  "dashPaginationNext": {
+    "message": "次へ"
+  },
+  "dashCalendarClose": {
+    "message": "閉じる"
+  },
+  "dashPageSizeLabel": {
+    "message": "表示件数"
+  },
+  "dashCollapseList": {
+    "message": "サイト一覧を折りたたむ"
+  },
+  "dashExpandList": {
+    "message": "サイト一覧を展開"
+  },
+  "dashPageNumbersLabel": {
+    "message": "ページ番号"
+  },
+  "noData": {
+    "message": "データなし"
+  },
+  "trendChartEmpty": {
+    "message": "この期間に訪問はありません。別のフィルターまたは「すべて」を試してください。"
+  },
+  "hourChartEmpty": {
+    "message": "フィルター内の訪問に基づく時間帯分布"
+  },
+  "dashTrendTitleAll": {
+    "message": "日別訪問"
+  },
+  "dashTrendTitleHour": {
+    "message": "直近1時間（5分単位）"
+  },
+  "dashTrendTitleToday": {
+    "message": "今日の時間別訪問"
+  },
+  "dashTrendTitleWeek": {
+    "message": "直近7日の日別訪問"
+  },
+  "dashTrendTitleMonth": {
+    "message": "直近30日の日別訪問"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "選択日の時間別訪問"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "当日の時間別訪問"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "直近1時間（5分刻み）"
+  },
+  "dashHourTitleByClock": {
+    "message": "範囲内の時刻別（0–23時）訪問"
+  },
+  "dashFiveMinSegment": {
+    "message": "$1 番目の5分区間",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "カテゴリはドメインから自動判定"
+  },
+  "deleteSiteConfirm": {
+    "message": "$domain$ の全履歴を削除しますか？",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "クリックで日表示フィルターを解除"
+  },
+  "timeJustNow": {
+    "message": "たった今"
+  },
+  "timeMinutesAgo": {
+    "message": "$1 分前",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$1 時間前",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$1 日前",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "サイト,ドメイン,訪問数,ページ数,最終訪問,最初の訪問"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1 ページ",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1 回",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "サイトの履歴を削除"
+  },
+  "category_search": {
+    "message": "検索"
+  },
+  "category_social": {
+    "message": "SNS"
+  },
+  "category_video": {
+    "message": "動画"
+  },
+  "category_shopping": {
+    "message": "ショッピング"
+  },
+  "category_dev": {
+    "message": "開発"
+  },
+  "category_office": {
+    "message": "オフィス"
+  },
+  "category_news": {
+    "message": "ニュース"
+  },
+  "category_wiki": {
+    "message": "Wiki"
+  },
+  "category_other": {
+    "message": "その他"
+  },
+  "calendarSun": {
+    "message": "日"
+  },
+  "calendarMon": {
+    "message": "月"
+  },
+  "calendarTue": {
+    "message": "火"
+  },
+  "calendarWed": {
+    "message": "水"
+  },
+  "calendarThu": {
+    "message": "木"
+  },
+  "calendarFri": {
+    "message": "金"
+  },
+  "calendarSat": {
+    "message": "土"
+  }
+}

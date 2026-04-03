@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StatsFlow</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="dash-app" id="dash-app">
+    <div class="dash-sidebar-backdrop" id="dash-sidebar-backdrop" aria-hidden="true"></div>
+    <aside class="dash-sidebar" id="dash-sidebar-panel" aria-label="Settings">
+      <div class="dash-sidebar-inner">
+        <div class="dash-sidebar-head">
+          <div class="dash-brand">
+            <div class="dash-brand-mark">
+              <img src="icons/icon48.png" width="40" height="40" alt="" class="dash-brand-icon">
+            </div>
+            <div class="dash-brand-text">
+              <span id="dash-ext-name" class="dash-brand-name"></span>
+            </div>
+          </div>
+        </div>
+
+        <nav class="dash-nav" aria-label="Main">
+          <button type="button" class="dash-nav-item active" data-panel="home" data-i18n-aria-label="dashNavHome">
+            <svg class="dash-nav-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="20" x2="20" y2="20"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+              <line x1="12" y1="20" x2="12" y2="8"/>
+              <line x1="18" y1="20" x2="18" y2="11"/>
+            </svg>
+            <span class="dash-nav-item-text" data-i18n="dashNavHome">Analytics</span>
+          </button>
+          <button type="button" class="dash-nav-item" data-panel="blacklist" data-i18n-aria-label="dashNavBlacklist">
+            <svg class="dash-nav-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="4.5" y1="4.5" x2="19.5" y2="19.5"/>
+            </svg>
+            <span class="dash-nav-item-text" data-i18n="dashNavBlacklist">Blacklist</span>
+          </button>
+          <button type="button" class="dash-nav-item" data-panel="about" data-i18n-aria-label="dashNavAbout">
+            <svg class="dash-nav-item-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span class="dash-nav-item-text" data-i18n="dashNavAbout">About</span>
+          </button>
+        </nav>
+
+        <div class="dash-sidebar-footer">
+          <div class="dash-sidebar-divider"></div>
+          <div class="dash-toolbar">
+            <div class="dash-field">
+              <label for="dash-lang" class="dash-label" data-i18n="switchLanguage">Language</label>
+              <select id="dash-lang" class="dash-select" data-i18n-aria-label="switchLanguage" aria-label="Language">
+                <option value="en" data-i18n="langEnglish">English</option>
+                <option value="zh_CN" data-i18n="langChinese">简体中文</option>
+                <option value="ja" data-i18n="langJapanese">日本語</option>
+                <option value="ru" data-i18n="langRussian">Русский</option>
+                <option value="id" data-i18n="langIndonesian">Bahasa Indonesia</option>
+                <option value="ar" data-i18n="langArabic">العربية</option>
+                <option value="es" data-i18n="langSpanish">Español</option>
+                <option value="pt_BR" data-i18n="langPortugueseBrazil">Português (Brasil)</option>
+                <option value="de" data-i18n="langGerman">Deutsch</option>
+                <option value="fr" data-i18n="langFrench">Français</option>
+                <option value="ko" data-i18n="langKorean">한국어</option>
+              </select>
+            </div>
+            <div class="dash-field">
+              <span class="dash-label" id="dash-theme-label">Theme</span>
+              <button type="button" class="dash-theme-btn" id="dash-theme-btn" aria-label="Theme">
+                <svg class="dash-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="dash-icon-sun hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"/>
+                  <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                  <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button type="button" class="dash-sidebar-collapse" id="dash-sidebar-collapse" aria-expanded="true">
+            <svg class="dash-sidebar-collapse-icon dash-icon-sidebar-collapse" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/>
+            </svg>
+            <svg class="dash-sidebar-collapse-icon dash-icon-sidebar-expand" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+      <div class="dash-main-inner">
+      <header class="dash-main-topbar">
+        <button type="button" class="dash-sidebar-toggle" id="dash-sidebar-toggle" aria-controls="dash-sidebar-panel" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          <span class="dash-sr-only" data-i18n="dashMenuOpen">Menu</span>
+        </button>
+        <span class="dash-main-topbar-title" data-i18n="dashNavHome">Analytics</span>
+      </header>
+
+      <section id="panel-home" class="dash-panel dash-panel-home active" aria-labelledby="dash-home-heading">
+        <h1 id="dash-home-heading" class="dash-sr-only" data-i18n="dashHomeTitle">Stats workspace</h1>
+        <div class="dash-workspace" id="dash-workspace">
+
+          <section class="dash-ws-block dash-ws-block-overview dash-ws-sheet" aria-label="Overview">
+            <div class="dash-ws-overview-left">
+              <div id="dash-ws-overview-filters" class="dash-ws-filter-row">
+                <button type="button" class="dash-ws-filter-btn" data-filter="all" data-i18n="filterAll">All</button>
+                <button type="button" class="dash-ws-filter-btn" data-filter="hour" data-i18n="filterHour">Hour</button>
+                <button type="button" class="dash-ws-filter-btn active" data-filter="today" data-i18n="filterToday">Today</button>
+                <button type="button" class="dash-ws-filter-btn" data-filter="week" data-i18n="filterWeek">Week</button>
+                <button type="button" class="dash-ws-filter-btn" data-filter="month" data-i18n="filterMonth">Month</button>
+              </div>
+              <div class="dash-ws-overview-cal-row">
+                <button type="button" class="dash-ws-icon-btn" id="dash-ws-cal-btn" data-i18n-title="selectDate" data-i18n-aria-label="selectDate">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                </button>
+                <span id="dash-ws-date-badge" class="dash-ws-date-badge hidden" role="button" tabindex="0"></span>
+              </div>
+            </div>
+            <div class="dash-ws-overview-right" role="group" aria-label="Summary">
+              <div class="dash-ws-stat-circle">
+                <div class="dash-ws-stat-circle-inner">
+                  <span class="dash-ws-stat-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                    </svg>
+                  </span>
+                  <span id="dash-ws-stat-sites-num" class="dash-ws-stat-num">—</span>
+                  <span class="dash-ws-stat-caption" data-i18n="siteCount">Sites</span>
+                </div>
+              </div>
+              <div class="dash-ws-stat-circle">
+                <div class="dash-ws-stat-circle-inner">
+                  <span class="dash-ws-stat-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                  </span>
+                  <span id="dash-ws-stat-visits-num" class="dash-ws-stat-num">—</span>
+                  <span class="dash-ws-stat-caption" data-i18n="visitCount">Visits</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="dash-ws-block dash-ws-sheet">
+            <div class="dash-ws-chart-head-wrap">
+              <div class="dash-ws-chart-head" id="dash-ws-trend-heading"></div>
+              <button type="button" class="dash-ws-chart-download" id="dash-ws-trend-dl" data-i18n-title="dashChartDownload" data-i18n-aria-label="dashChartDownload">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              </button>
+            </div>
+            <div class="dash-ws-trend-bars-outer">
+              <div id="dash-ws-trend-bars" class="dash-ws-trend-bars"></div>
+            </div>
+          </section>
+
+          <section class="dash-ws-block dash-ws-block-split" aria-label="Charts">
+            <div class="dash-ws-split-cell dash-ws-sheet">
+              <div class="dash-ws-chart-head-wrap">
+                <div class="dash-ws-chart-head" id="dash-ws-hour-heading"></div>
+                <button type="button" class="dash-ws-chart-download" id="dash-ws-hour-dl" data-i18n-title="dashChartDownload" data-i18n-aria-label="dashChartDownload">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </button>
+              </div>
+              <div id="dash-ws-hour-bars" class="dash-ws-hour-bars"></div>
+            </div>
+            <div class="dash-ws-split-cell dash-ws-sheet">
+              <div class="dash-ws-chart-head-wrap">
+                <div class="dash-ws-chart-head" data-i18n="categoryChartTitle">Category</div>
+                <button type="button" class="dash-ws-chart-download" id="dash-ws-category-dl" data-i18n-title="dashChartDownload" data-i18n-aria-label="dashChartDownload">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </button>
+              </div>
+              <div id="dash-ws-category-bars" class="dash-ws-category-wrap"></div>
+            </div>
+          </section>
+
+          <section class="dash-ws-block dash-ws-block-list dash-ws-sheet" aria-labelledby="dash-ws-history-heading">
+            <h2 id="dash-ws-history-heading" class="dash-ws-block-title" data-i18n="dashBrowseHistoryTitle">Browsing history</h2>
+            <div class="dash-ws-toolbar" id="dash-ws-toolbar">
+              <div class="dash-ws-search-row">
+                <input type="search" id="dash-ws-search" class="dash-ws-search-input" data-i18n-placeholder="searchPlaceholder" autocomplete="off">
+              </div>
+              <div class="dash-ws-actions">
+                <button type="button" class="dash-ws-icon-btn" id="dash-ws-export" data-i18n-title="exportCsv" data-i18n-aria-label="exportCsv">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                </button>
+                <div class="dash-ws-sort">
+                  <button type="button" class="dash-ws-sort-btn active" data-sort="time" data-i18n="sortByTime">Time</button>
+                  <button type="button" class="dash-ws-sort-btn" data-sort="visits" data-i18n="sortByVisits">Visits</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="dash-ws-list" class="dash-ws-list"></div>
+            <div class="dash-ws-pagination">
+              <div class="dash-ws-pagination-row">
+                <button type="button" class="dash-ws-page-btn" id="dash-ws-page-prev" data-i18n="dashPaginationPrev">Previous</button>
+                <nav id="dash-ws-page-nums" class="dash-ws-page-nums" data-i18n-aria-label="dashPageNumbersLabel"></nav>
+                <button type="button" class="dash-ws-page-btn" id="dash-ws-page-next" data-i18n="dashPaginationNext">Next</button>
+              </div>
+              <div class="dash-ws-pagination-meta">
+                <label class="dash-ws-page-size-label" for="dash-ws-page-size"><span data-i18n="dashPageSizeLabel">Per page</span></label>
+                <select id="dash-ws-page-size" class="dash-ws-page-size-select" data-i18n-aria-label="dashPageSizeLabel">
+                  <option value="10">10</option>
+                  <option value="20" selected>20</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+                <span id="dash-ws-page-info" class="dash-ws-page-info"></span>
+              </div>
+            </div>
+          </section>
+
+          <div id="dash-ws-cal-overlay" class="dash-ws-cal-overlay hidden">
+            <div class="dash-ws-cal-popup">
+              <div class="dash-ws-cal-head">
+                <button type="button" id="dash-ws-cal-prev" class="dash-ws-cal-nav" aria-label="Prev">‹</button>
+                <span id="dash-ws-cal-title" class="dash-ws-cal-title"></span>
+                <button type="button" id="dash-ws-cal-next" class="dash-ws-cal-nav" aria-label="Next">›</button>
+                <button type="button" id="dash-ws-cal-close" class="dash-ws-cal-close" data-i18n-aria-label="dashCalendarClose">×</button>
+              </div>
+              <div class="dash-ws-cal-weekdays">
+                <span data-i18n="calendarSun"></span><span data-i18n="calendarMon"></span><span data-i18n="calendarTue"></span><span data-i18n="calendarWed"></span><span data-i18n="calendarThu"></span><span data-i18n="calendarFri"></span><span data-i18n="calendarSat"></span>
+              </div>
+              <div id="dash-ws-cal-days" class="dash-ws-cal-days"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="panel-blacklist" class="dash-panel dash-panel-sheet" aria-labelledby="dash-blacklist-heading">
+        <article class="dash-sheet">
+        <h1 id="dash-blacklist-heading" class="dash-page-title" data-i18n="dashNavBlacklist">Blacklist</h1>
+        <p class="dash-section-intro" data-i18n="blacklistLabel"></p>
+        <div class="dash-blacklist-wrap">
+          <div class="dash-blacklist-row">
+            <input type="text" id="dash-blacklist-input" class="dash-input" data-i18n-placeholder="blacklistPlaceholder" autocomplete="off">
+            <button type="button" id="dash-blacklist-add" class="dash-btn-primary" data-i18n="add">Add</button>
+          </div>
+          <div id="dash-blacklist-suggestions" class="dash-suggestions hidden" role="listbox"></div>
+          <ul id="dash-blacklist-list" class="dash-blacklist-list"></ul>
+        </div>
+        </article>
+      </section>
+
+      <section id="panel-about" class="dash-panel dash-panel-sheet" aria-labelledby="dash-about-heading">
+        <article class="dash-sheet">
+        <h1 id="dash-about-heading" class="dash-page-title" data-i18n="optionsPageTitle">About</h1>
+        <p id="dash-about-desc" class="dash-lead"></p>
+
+        <p class="dash-about-version">
+          <span data-i18n="optionsVersionLabel">Version</span>
+          <strong id="dash-version"></strong>
+        </p>
+
+        <h2 class="dash-subtitle dash-subtitle-spaced" data-i18n="dashAboutFeaturesPreviewHeading">Feature preview</h2>
+        <ul id="dash-about-features" class="dash-features-list"></ul>
+
+        <h2 class="dash-subtitle dash-subtitle-spaced" data-i18n="dashAboutPermissionsHeading">Permissions</h2>
+        <ul class="dash-features-list dash-permissions-list">
+          <li data-i18n="dashPermHistory"></li>
+          <li data-i18n="dashPermStorage"></li>
+          <li data-i18n="dashPermFavicon"></li>
+          <li data-i18n="dashPermDownloads"></li>
+        </ul>
+        <p class="dash-text dash-perm-host" data-i18n="dashPermHostGitHub"></p>
+
+        <h2 class="dash-subtitle dash-subtitle-spaced" data-i18n="dashAboutLicenseHeading">License</h2>
+        <p class="dash-text" data-i18n="dashAboutLicenseBody"></p>
+
+        <h2 class="dash-subtitle dash-subtitle-spaced" data-i18n="optionsLinksHeading">Links</h2>
+        <ul class="dash-link-list">
+          <li><a id="dash-link-github" href="https://github.com/Json-wu/statsflow" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a id="dash-link-privacy" href="https://json-wu.github.io/statsflow/privacy.html" target="_blank" rel="noopener noreferrer">Privacy</a></li>
+        </ul>
+
+        <h2 class="dash-subtitle dash-subtitle-spaced" data-i18n="dashAboutContactHeading">Contact us</h2>
+        <p class="dash-text dash-about-contact">
+          <a class="dash-link" href="mailto:wyqctt@gmail.com" data-i18n="dashAboutContactLink">Send email</a>
+        </p>
+        </article>
+      </section>
+      </div>
+    </main>
+  </div>
+  <script src="statsflow-i18n.js"></script>
+  <script src="dashboard-workspace.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

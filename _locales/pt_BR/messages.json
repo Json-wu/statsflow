@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "Rastreador de histórico e análises do navegador"
+  },
+  "dashSidebarBrandName": {
+    "message": "Análises do navegador"
+  },
+  "extDescription": {
+    "message": "Histórico visual: estatísticas por domínio, gráficos interativos e exportação CSV."
+  },
+  "switchToStats": {
+    "message": "Ir para estatísticas"
+  },
+  "switchToHistory": {
+    "message": "Ir para o histórico"
+  },
+  "siteCount": {
+    "message": "Sites"
+  },
+  "visitCount": {
+    "message": "Visitas"
+  },
+  "searchPlaceholder": {
+    "message": "Buscar sites, URL"
+  },
+  "filterAll": {
+    "message": "Tudo"
+  },
+  "filterHour": {
+    "message": "Hora"
+  },
+  "filterToday": {
+    "message": "Hoje"
+  },
+  "filterWeek": {
+    "message": "Semana"
+  },
+  "filterMonth": {
+    "message": "Mês"
+  },
+  "exportCsv": {
+    "message": "Exportar CSV"
+  },
+  "selectDate": {
+    "message": "Selecionar data"
+  },
+  "sortByTime": {
+    "message": "Hora da visita"
+  },
+  "sortByVisits": {
+    "message": "N.º de visitas"
+  },
+  "loading": {
+    "message": "Carregando…"
+  },
+  "privacySettings": {
+    "message": "Privacidade"
+  },
+  "blacklistLabel": {
+    "message": "Lista de bloqueio de domínios (ocultar histórico destes domínios)"
+  },
+  "blacklistPlaceholder": {
+    "message": "Digite o domínio, ex. example.com"
+  },
+  "add": {
+    "message": "Adicionar"
+  },
+  "remove": {
+    "message": "Remover"
+  },
+  "trendChartTitle": {
+    "message": "Visitas diárias (últimos 7 dias)"
+  },
+  "trendByDay": {
+    "message": "Por dia"
+  },
+  "trendByWeek": {
+    "message": "Por semana"
+  },
+  "hourChartTitle": {
+    "message": "Distribuição por horário"
+  },
+  "categoryChartTitle": {
+    "message": "Participação por categoria"
+  },
+  "backToTop": {
+    "message": "Voltar ao topo"
+  },
+  "toggleDarkMode": {
+    "message": "Modo escuro"
+  },
+  "toggleLightMode": {
+    "message": "Modo claro"
+  },
+  "switchLanguage": {
+    "message": "Alternar idioma"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "Ver no GitHub"
+  },
+  "openExtensionPage": {
+    "message": "Página da extensão"
+  },
+  "optionsPageTitle": {
+    "message": "Sobre esta extensão"
+  },
+  "optionsVersionLabel": {
+    "message": "Versão"
+  },
+  "optionsLinksHeading": {
+    "message": "Links"
+  },
+  "optionsPrivacy": {
+    "message": "Política de privacidade"
+  },
+  "optionsFeaturesHeading": {
+    "message": "Recursos"
+  },
+  "optionsFeatDomains": {
+    "message": "Agrupa histórico por domínio raiz; favicon; clique para expandir URLs e detalhes."
+  },
+  "optionsFeatStats": {
+    "message": "Visitas, páginas, última visita e barra de participação no filtro atual."
+  },
+  "optionsFeatSort": {
+    "message": "Ordenar por visita mais recente ou total de visitas."
+  },
+  "optionsFeatFilter": {
+    "message": "Filtros: Tudo, Hoje, Semana, Mês (padrão Hoje)."
+  },
+  "optionsFeatCalendar": {
+    "message": "Calendário para um dia; o selo indica filtro ativo—clique para voltar aos intervalos."
+  },
+  "optionsFeatViews": {
+    "message": "Alternar entre lista de histórico e visão de estatísticas."
+  },
+  "optionsFeatTrend": {
+    "message": "Gráfico de barras dos últimos 7 dias."
+  },
+  "optionsFeatHour": {
+    "message": "Distribuição 0–23 com curva suave conforme o filtro atual."
+  },
+  "optionsFeatCategory": {
+    "message": "Gráfico de pizza por categoria; legenda e fatias destacam juntos."
+  },
+  "optionsFeatSearch": {
+    "message": "Buscar títulos, URLs e domínios no intervalo atual."
+  },
+  "optionsFeatExport": {
+    "message": "Exportar CSV (UTF-8 BOM): título, domínio, visitas, páginas, última e primeira visita."
+  },
+  "optionsFeatPrivacy": {
+    "message": "Lista de bloqueio; sugestões ao digitar; excluir histórico de um site."
+  },
+  "optionsFeatTheme": {
+    "message": "Tema claro/escuro. Idioma salvo no armazenamento (vários idiomas)."
+  },
+  "optionsFeatFooter": {
+    "message": "Rodapé: página da extensão, GitHub, voltar ao topo. Em build de dev pode haver um menu de idioma."
+  },
+  "dashChartsEyebrow": {
+    "message": "Insights"
+  },
+  "dashNavHome": {
+    "message": "Análise"
+  },
+  "dashNavBlacklist": {
+    "message": "Lista de bloqueio"
+  },
+  "dashNavAbout": {
+    "message": "Sobre"
+  },
+  "dashMenuOpen": {
+    "message": "Abrir menu"
+  },
+  "dashSidebarCollapse": {
+    "message": "Recolher barra lateral"
+  },
+  "dashSidebarExpand": {
+    "message": "Expandir barra lateral"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "Histórico de navegação"
+  },
+  "dashHomeTitle": {
+    "message": "Área de estatísticas"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "Visão geral dos recursos"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "Permissões"
+  },
+  "dashPermHistory": {
+    "message": "history — Lê o histórico para estatísticas; você pode excluir o histórico de um site na interface."
+  },
+  "dashPermStorage": {
+    "message": "storage — Salva preferências apenas neste dispositivo."
+  },
+  "dashPermFavicon": {
+    "message": "favicon — Ícones pelo serviço integrado do navegador."
+  },
+  "dashPermDownloads": {
+    "message": "downloads — Salva arquivos CSV ao exportar."
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — Somente ao abrir o link do repositório pela extensão."
+  },
+  "dashAboutLicenseHeading": {
+    "message": "Licença"
+  },
+  "dashAboutLicenseBody": {
+    "message": "Código no GitHub. Uso conforme a licença do repositório. Não afiliado ao Google."
+  },
+  "dashAboutContactHeading": {
+    "message": "Fale conosco"
+  },
+  "dashAboutContactLink": {
+    "message": "Enviar e-mail"
+  },
+  "dashPageStatus": {
+    "message": "Página $1 de $2 · $3 domínios"
+  },
+  "dashUseRegex": {
+    "message": "Regex"
+  },
+  "dashChartDownload": {
+    "message": "Baixar gráfico como PNG"
+  },
+  "dashChartsColumnTitle": {
+    "message": "Gráficos e tendências"
+  },
+  "dashPaginationPrev": {
+    "message": "Anterior"
+  },
+  "dashPaginationNext": {
+    "message": "Próximo"
+  },
+  "dashCalendarClose": {
+    "message": "Fechar"
+  },
+  "dashPageSizeLabel": {
+    "message": "Por página"
+  },
+  "dashCollapseList": {
+    "message": "Recolher lista de sites"
+  },
+  "dashExpandList": {
+    "message": "Expandir lista de sites"
+  },
+  "dashPageNumbersLabel": {
+    "message": "Números de página"
+  },
+  "noData": {
+    "message": "Sem dados"
+  },
+  "trendChartEmpty": {
+    "message": "Sem visitas neste intervalo. Tente outro filtro ou «Tudo»."
+  },
+  "hourChartEmpty": {
+    "message": "Distribuição com base nas visitas filtradas"
+  },
+  "dashTrendTitleAll": {
+    "message": "Visitas diárias"
+  },
+  "dashTrendTitleHour": {
+    "message": "Visitas a cada 5 minutos (última hora)"
+  },
+  "dashTrendTitleToday": {
+    "message": "Visitas por hora hoje"
+  },
+  "dashTrendTitleWeek": {
+    "message": "Visitas por dia (7 dias)"
+  },
+  "dashTrendTitleMonth": {
+    "message": "Visitas por dia (30 dias)"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "Visitas por hora (dia selecionado)"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "Visitas por hora (este dia)"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "Última hora em passos de 5 minutos"
+  },
+  "dashHourTitleByClock": {
+    "message": "Visitas por hora (0–23) no intervalo"
+  },
+  "dashFiveMinSegment": {
+    "message": "Faixa de 5 min $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "Categorias detectadas automaticamente pelo domínio"
+  },
+  "deleteSiteConfirm": {
+    "message": "Excluir todo o histórico de $domain$?",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "Clique para limpar filtro de data"
+  },
+  "timeJustNow": {
+    "message": "Agora"
+  },
+  "timeMinutesAgo": {
+    "message": "Há $1 min",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "Há $1 h",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "Há $1 dias",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "Site,Domínio,Visitas,Páginas,Última visita,Primeira visita"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1 páginas",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1 visitas",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "Excluir histórico do site"
+  },
+  "category_search": {
+    "message": "Busca"
+  },
+  "category_social": {
+    "message": "Social"
+  },
+  "category_video": {
+    "message": "Vídeo"
+  },
+  "category_shopping": {
+    "message": "Compras"
+  },
+  "category_dev": {
+    "message": "Desenvolvimento"
+  },
+  "category_office": {
+    "message": "Escritório"
+  },
+  "category_news": {
+    "message": "Notícias"
+  },
+  "category_wiki": {
+    "message": "Wiki"
+  },
+  "category_other": {
+    "message": "Outro"
+  },
+  "calendarSun": {
+    "message": "Dom"
+  },
+  "calendarMon": {
+    "message": "Seg"
+  },
+  "calendarTue": {
+    "message": "Ter"
+  },
+  "calendarWed": {
+    "message": "Qua"
+  },
+  "calendarThu": {
+    "message": "Qui"
+  },
+  "calendarFri": {
+    "message": "Sex"
+  },
+  "calendarSat": {
+    "message": "Sáb"
+  }
+}

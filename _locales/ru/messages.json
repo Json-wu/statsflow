@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "Трекер истории браузера и аналитики"
+  },
+  "dashSidebarBrandName": {
+    "message": "Аналитика браузера"
+  },
+  "extDescription": {
+    "message": "Визуализация истории: статистика по доменам, интерактивные графики, экспорт CSV."
+  },
+  "switchToStats": {
+    "message": "К статистике"
+  },
+  "switchToHistory": {
+    "message": "К истории"
+  },
+  "siteCount": {
+    "message": "Сайты"
+  },
+  "visitCount": {
+    "message": "Визиты"
+  },
+  "searchPlaceholder": {
+    "message": "Поиск сайтов, URL"
+  },
+  "filterAll": {
+    "message": "Все"
+  },
+  "filterHour": {
+    "message": "Час"
+  },
+  "filterToday": {
+    "message": "Сегодня"
+  },
+  "filterWeek": {
+    "message": "Неделя"
+  },
+  "filterMonth": {
+    "message": "Месяц"
+  },
+  "exportCsv": {
+    "message": "Экспорт CSV"
+  },
+  "selectDate": {
+    "message": "Выбрать дату"
+  },
+  "sortByTime": {
+    "message": "Время визита"
+  },
+  "sortByVisits": {
+    "message": "Число визитов"
+  },
+  "loading": {
+    "message": "Загрузка…"
+  },
+  "privacySettings": {
+    "message": "Конфиденциальность"
+  },
+  "blacklistLabel": {
+    "message": "Чёрный список доменов (скрыть историю для этих доменов)"
+  },
+  "blacklistPlaceholder": {
+    "message": "Введите домен, напр. example.com"
+  },
+  "add": {
+    "message": "Добавить"
+  },
+  "remove": {
+    "message": "Удалить"
+  },
+  "trendChartTitle": {
+    "message": "Визиты по дням (последние 7 дней)"
+  },
+  "trendByDay": {
+    "message": "По дням"
+  },
+  "trendByWeek": {
+    "message": "По неделям"
+  },
+  "hourChartTitle": {
+    "message": "Распределение по времени суток"
+  },
+  "categoryChartTitle": {
+    "message": "Доля визитов по категориям"
+  },
+  "backToTop": {
+    "message": "Наверх"
+  },
+  "toggleDarkMode": {
+    "message": "Тёмная тема"
+  },
+  "toggleLightMode": {
+    "message": "Светлая тема"
+  },
+  "switchLanguage": {
+    "message": "Язык"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "GitHub"
+  },
+  "openExtensionPage": {
+    "message": "Страница расширения"
+  },
+  "optionsPageTitle": {
+    "message": "О расширении"
+  },
+  "optionsVersionLabel": {
+    "message": "Версия"
+  },
+  "optionsLinksHeading": {
+    "message": "Ссылки"
+  },
+  "optionsPrivacy": {
+    "message": "Политика конфиденциальности"
+  },
+  "optionsFeaturesHeading": {
+    "message": "Возможности"
+  },
+  "optionsFeatDomains": {
+    "message": "Группировка истории по корневому домену; фавиконки; развернуть список URL и детали визита."
+  },
+  "optionsFeatStats": {
+    "message": "Число визитов, страниц, время последнего визита и доля от текущего фильтра."
+  },
+  "optionsFeatSort": {
+    "message": "Сортировка по времени или по числу визитов."
+  },
+  "optionsFeatFilter": {
+    "message": "Фильтры: Все, Сегодня, Неделя, Месяц (по умолчанию Сегодня)."
+  },
+  "optionsFeatCalendar": {
+    "message": "Календарь для одного дня; значок даты — активный фильтр, клик сбрасывает на диапазоны."
+  },
+  "optionsFeatViews": {
+    "message": "Переключение списка истории и графиков в заголовке."
+  },
+  "optionsFeatTrend": {
+    "message": "Столбчатая диаграмма визитов за 7 дней."
+  },
+  "optionsFeatHour": {
+    "message": "Распределение по часам 0–23 с плавной кривой и заливкой по текущему фильтру."
+  },
+  "optionsFeatCategory": {
+    "message": "Круговая диаграмма по категориям сайтов; легенда и секторы подсвечиваются."
+  },
+  "optionsFeatSearch": {
+    "message": "Поиск по заголовкам, URL и доменам в текущем диапазоне."
+  },
+  "optionsFeatExport": {
+    "message": "Экспорт в CSV (UTF-8 BOM): название, домен, визиты, страницы, последний и первый визит."
+  },
+  "optionsFeatPrivacy": {
+    "message": "Чёрный список; подсказки доменов при вводе; удаление истории сайта."
+  },
+  "optionsFeatTheme": {
+    "message": "Светлая/тёмная тема. Язык сохраняется (много языков)."
+  },
+  "optionsFeatFooter": {
+    "message": "Подвал: страница расширения, GitHub, «наверх». В режиме разработчика может быть меню языка."
+  },
+  "dashChartsEyebrow": {
+    "message": "Обзор"
+  },
+  "dashNavHome": {
+    "message": "Аналитика"
+  },
+  "dashNavBlacklist": {
+    "message": "Чёрный список"
+  },
+  "dashNavAbout": {
+    "message": "О программе"
+  },
+  "dashMenuOpen": {
+    "message": "Открыть меню"
+  },
+  "dashSidebarCollapse": {
+    "message": "Свернуть боковую панель"
+  },
+  "dashSidebarExpand": {
+    "message": "Развернуть боковую панель"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "История браузера"
+  },
+  "dashHomeTitle": {
+    "message": "Рабочая область"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "Обзор функций"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "Разрешения"
+  },
+  "dashPermHistory": {
+    "message": "history — чтение истории для статистики; можно удалить историю сайта в интерфейсе."
+  },
+  "dashPermStorage": {
+    "message": "storage — тема, язык, чёрный список только на устройстве."
+  },
+  "dashPermFavicon": {
+    "message": "favicon — иконки сайтов через встроенный сервис браузера."
+  },
+  "dashPermDownloads": {
+    "message": "downloads — сохранение CSV при экспорте."
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — только при открытии ссылки на репозиторий."
+  },
+  "dashAboutLicenseHeading": {
+    "message": "Лицензия"
+  },
+  "dashAboutLicenseBody": {
+    "message": "Исходный код на GitHub. Условия — в файле лицензии репозитория. Не связано с Google."
+  },
+  "dashAboutContactHeading": {
+    "message": "Связаться с нами"
+  },
+  "dashAboutContactLink": {
+    "message": "Отправить письмо"
+  },
+  "dashPageStatus": {
+    "message": "Стр. $1 из $2 · доменов: $3"
+  },
+  "dashUseRegex": {
+    "message": "Regex"
+  },
+  "dashChartDownload": {
+    "message": "Скачать график PNG"
+  },
+  "dashChartsColumnTitle": {
+    "message": "Графики и тренды"
+  },
+  "dashPaginationPrev": {
+    "message": "Назад"
+  },
+  "dashPaginationNext": {
+    "message": "Вперёд"
+  },
+  "dashCalendarClose": {
+    "message": "Закрыть"
+  },
+  "dashPageSizeLabel": {
+    "message": "На странице"
+  },
+  "dashCollapseList": {
+    "message": "Свернуть список"
+  },
+  "dashExpandList": {
+    "message": "Развернуть список"
+  },
+  "dashPageNumbersLabel": {
+    "message": "Номера страниц"
+  },
+  "noData": {
+    "message": "Нет данных"
+  },
+  "trendChartEmpty": {
+    "message": "Нет визитов в этом диапазоне. Попробуйте другой фильтр или «Все»."
+  },
+  "hourChartEmpty": {
+    "message": "Распределение по отфильтрованным визитам"
+  },
+  "dashTrendTitleAll": {
+    "message": "Визиты по дням"
+  },
+  "dashTrendTitleHour": {
+    "message": "Визиты каждые 5 минут (последний час)"
+  },
+  "dashTrendTitleToday": {
+    "message": "Визиты по часам сегодня"
+  },
+  "dashTrendTitleWeek": {
+    "message": "Визиты по дням (7 дней)"
+  },
+  "dashTrendTitleMonth": {
+    "message": "Визиты по дням (30 дней)"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "Визиты по часам (выбранный день)"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "Визиты по часам (этот день)"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "Последний час с шагом 5 минут"
+  },
+  "dashHourTitleByClock": {
+    "message": "Визиты по часам суток (0–23) в диапазоне"
+  },
+  "dashFiveMinSegment": {
+    "message": "Интервал 5 мин №$1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "Категории определяются по домену"
+  },
+  "deleteSiteConfirm": {
+    "message": "Удалить всю историю для $domain$?",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "Сбросить фильтр по дате"
+  },
+  "timeJustNow": {
+    "message": "Только что"
+  },
+  "timeMinutesAgo": {
+    "message": "$1 мин назад",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$1 ч назад",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$1 дн. назад",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "Сайт,Домен,Визиты,Страницы,Последний визит,Первый визит"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1 стр.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1 виз.",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "Удалить историю сайта"
+  },
+  "category_search": {
+    "message": "Поиск"
+  },
+  "category_social": {
+    "message": "Соцсети"
+  },
+  "category_video": {
+    "message": "Видео"
+  },
+  "category_shopping": {
+    "message": "Покупки"
+  },
+  "category_dev": {
+    "message": "Разработка"
+  },
+  "category_office": {
+    "message": "Офис"
+  },
+  "category_news": {
+    "message": "Новости"
+  },
+  "category_wiki": {
+    "message": "Вики"
+  },
+  "category_other": {
+    "message": "Другое"
+  },
+  "calendarSun": {
+    "message": "Вс"
+  },
+  "calendarMon": {
+    "message": "Пн"
+  },
+  "calendarTue": {
+    "message": "Вт"
+  },
+  "calendarWed": {
+    "message": "Ср"
+  },
+  "calendarThu": {
+    "message": "Чт"
+  },
+  "calendarFri": {
+    "message": "Пт"
+  },
+  "calendarSat": {
+    "message": "Сб"
+  }
+}

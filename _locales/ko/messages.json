@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "브라우저 기록·분석 추적기"
+  },
+  "dashSidebarBrandName": {
+    "message": "브라우저 분석 추적기"
+  },
+  "extDescription": {
+    "message": "기록 시각화: 도메인 통계, 인터랙티브 차트, CSV 내보내기."
+  },
+  "switchToStats": {
+    "message": "통계 보기"
+  },
+  "switchToHistory": {
+    "message": "기록 보기"
+  },
+  "siteCount": {
+    "message": "사이트"
+  },
+  "visitCount": {
+    "message": "방문"
+  },
+  "searchPlaceholder": {
+    "message": "사이트·URL 검색"
+  },
+  "filterAll": {
+    "message": "전체"
+  },
+  "filterHour": {
+    "message": "1시간"
+  },
+  "filterToday": {
+    "message": "오늘"
+  },
+  "filterWeek": {
+    "message": "주"
+  },
+  "filterMonth": {
+    "message": "월"
+  },
+  "exportCsv": {
+    "message": "CSV 내보내기"
+  },
+  "selectDate": {
+    "message": "날짜 선택"
+  },
+  "sortByTime": {
+    "message": "방문 시각"
+  },
+  "sortByVisits": {
+    "message": "방문 수"
+  },
+  "loading": {
+    "message": "불러오는 중…"
+  },
+  "privacySettings": {
+    "message": "개인 정보"
+  },
+  "blacklistLabel": {
+    "message": "도메인 차단 목록(이 도메인 기록 숨기기)"
+  },
+  "blacklistPlaceholder": {
+    "message": "도메인 입력, 예: example.com"
+  },
+  "add": {
+    "message": "추가"
+  },
+  "remove": {
+    "message": "제거"
+  },
+  "trendChartTitle": {
+    "message": "일별 방문(최근 7일)"
+  },
+  "trendByDay": {
+    "message": "일별"
+  },
+  "trendByWeek": {
+    "message": "주별"
+  },
+  "hourChartTitle": {
+    "message": "방문 시간대 분포"
+  },
+  "categoryChartTitle": {
+    "message": "카테고리별 방문 비율"
+  },
+  "backToTop": {
+    "message": "맨 위로"
+  },
+  "toggleDarkMode": {
+    "message": "다크 모드"
+  },
+  "toggleLightMode": {
+    "message": "라이트 모드"
+  },
+  "switchLanguage": {
+    "message": "언어 바꾸기"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "GitHub에서 보기"
+  },
+  "openExtensionPage": {
+    "message": "확장 프로그램 페이지"
+  },
+  "optionsPageTitle": {
+    "message": "이 확장 프로그램 정보"
+  },
+  "optionsVersionLabel": {
+    "message": "버전"
+  },
+  "optionsLinksHeading": {
+    "message": "링크"
+  },
+  "optionsPrivacy": {
+    "message": "개인정보 처리방침"
+  },
+  "optionsFeaturesHeading": {
+    "message": "기능"
+  },
+  "optionsFeatDomains": {
+    "message": "루트 도메인별로 기록을 묶고, 파비콘을 표시하며, 클릭 시 URL·방문 세부 정보를 펼칩니다."
+  },
+  "optionsFeatStats": {
+    "message": "사이트별 방문 수·페이지 수·마지막 방문·현재 필터 대비 비율 막대를 표시합니다."
+  },
+  "optionsFeatSort": {
+    "message": "최근 방문 순 또는 방문 횟수 순으로 정렬합니다."
+  },
+  "optionsFeatFilter": {
+    "message": "시간 필터: 전체, 오늘, 주, 월(기본: 오늘)."
+  },
+  "optionsFeatCalendar": {
+    "message": "달력에서 하루 선택. 날짜 배지가 일 단위 필터를 나타내며, 클릭하면 기간 필터로 돌아갑니다."
+  },
+  "optionsFeatViews": {
+    "message": "헤더에서 기록 목록과 통계(차트) 보기를 전환합니다."
+  },
+  "optionsFeatTrend": {
+    "message": "최근 7일 방문 추세 막대 그래프."
+  },
+  "optionsFeatHour": {
+    "message": "현재 필터에 따른 0–23시 방문 분포를 부드러한 곡선으로 표시합니다."
+  },
+  "optionsFeatCategory": {
+    "message": "도메인으로 추정한 카테고리 파이 차트. 범례와 조각이 함께 강조됩니다."
+  },
+  "optionsFeatSearch": {
+    "message": "현재 기간 내 제목·URL·도메인 검색."
+  },
+  "optionsFeatExport": {
+    "message": "CSV(UTF-8 BOM) 내보내기: 제목, 도메인, 방문, 페이지, 마지막·최초 방문."
+  },
+  "optionsFeatPrivacy": {
+    "message": "차단 목록, 입력 시 제안, 사이트 전체 기록 삭제."
+  },
+  "optionsFeatTheme": {
+    "message": "라이트/다크 테마. 언어는 확장 프로그램 저장소에 저장됩니다(다국어)."
+  },
+  "optionsFeatFooter": {
+    "message": "바닥글: 확장 페이지, GitHub, 맨 위로. 개발자 빌드에서는 언어 메뉴가 보일 수 있습니다."
+  },
+  "dashChartsEyebrow": {
+    "message": "인사이트"
+  },
+  "dashNavHome": {
+    "message": "분석"
+  },
+  "dashNavBlacklist": {
+    "message": "차단 목록"
+  },
+  "dashNavAbout": {
+    "message": "정보"
+  },
+  "dashMenuOpen": {
+    "message": "메뉴 열기"
+  },
+  "dashSidebarCollapse": {
+    "message": "사이드바 접기"
+  },
+  "dashSidebarExpand": {
+    "message": "사이드바 펼치기"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "브라우징 기록"
+  },
+  "dashHomeTitle": {
+    "message": "통계 작업 공간"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "기능 개요"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "권한"
+  },
+  "dashPermHistory": {
+    "message": "history — 통계를 위해 기록을 읽습니다. UI에서 사이트 기록을 삭제할 수 있습니다."
+  },
+  "dashPermStorage": {
+    "message": "storage — 이 기기에만 테마·언어·차단 목록 등을 저장합니다."
+  },
+  "dashPermFavicon": {
+    "message": "favicon — 브라우저 기본 파비콘 서비스로 아이콘을 불러옵니다."
+  },
+  "dashPermDownloads": {
+    "message": "downloads — 내보내기 시 CSV 파일을 저장합니다."
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — 확장에서 저장소 링크를 열 때만 사용합니다."
+  },
+  "dashAboutLicenseHeading": {
+    "message": "라이선스"
+  },
+  "dashAboutLicenseBody": {
+    "message": "소스는 GitHub에 있습니다. 사용·수정·배포는 해당 저장소 라이선스를 따릅니다. Google과 무관합니다."
+  },
+  "dashAboutContactHeading": {
+    "message": "문의하기"
+  },
+  "dashAboutContactLink": {
+    "message": "이메일 보내기"
+  },
+  "dashPageStatus": {
+    "message": "$2 페이지 중 $1 페이지 · 도메인 $3개"
+  },
+  "dashUseRegex": {
+    "message": "정규식"
+  },
+  "dashChartDownload": {
+    "message": "차트를 PNG로 저장"
+  },
+  "dashChartsColumnTitle": {
+    "message": "차트·추세"
+  },
+  "dashPaginationPrev": {
+    "message": "이전"
+  },
+  "dashPaginationNext": {
+    "message": "다음"
+  },
+  "dashCalendarClose": {
+    "message": "닫기"
+  },
+  "dashPageSizeLabel": {
+    "message": "페이지당"
+  },
+  "dashCollapseList": {
+    "message": "사이트 목록 접기"
+  },
+  "dashExpandList": {
+    "message": "사이트 목록 펼치기"
+  },
+  "dashPageNumbersLabel": {
+    "message": "페이지 번호"
+  },
+  "noData": {
+    "message": "데이터 없음"
+  },
+  "trendChartEmpty": {
+    "message": "이 기간에 방문이 없습니다. 다른 필터나 «전체»를 사용해 보세요."
+  },
+  "hourChartEmpty": {
+    "message": "필터된 방문을 기준으로 한 시간대 분포"
+  },
+  "dashTrendTitleAll": {
+    "message": "일별 방문"
+  },
+  "dashTrendTitleHour": {
+    "message": "5분 간격 방문(최근 1시간)"
+  },
+  "dashTrendTitleToday": {
+    "message": "오늘 시간대별 방문"
+  },
+  "dashTrendTitleWeek": {
+    "message": "일별 방문(7일)"
+  },
+  "dashTrendTitleMonth": {
+    "message": "일별 방문(30일)"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "선택한 날의 시간대별 방문"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "이날의 시간대별 방문"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "5분 단위 최근 1시간"
+  },
+  "dashHourTitleByClock": {
+    "message": "범위 내 시각(0–23)별 방문"
+  },
+  "dashFiveMinSegment": {
+    "message": "5분 구간 $1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "카테고리는 도메인에서 자동 감지"
+  },
+  "deleteSiteConfirm": {
+    "message": "$domain$의 모든 기록을 삭제할까요?",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "클릭하여 날짜 필터 지우기"
+  },
+  "timeJustNow": {
+    "message": "방금"
+  },
+  "timeMinutesAgo": {
+    "message": "$1분 전",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$1시간 전",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$1일 전",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "사이트,도메인,방문,페이지,마지막 방문,첫 방문"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1페이지",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1회",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "사이트 기록 삭제"
+  },
+  "category_search": {
+    "message": "검색"
+  },
+  "category_social": {
+    "message": "소셜"
+  },
+  "category_video": {
+    "message": "동영상"
+  },
+  "category_shopping": {
+    "message": "쇼핑"
+  },
+  "category_dev": {
+    "message": "개발"
+  },
+  "category_office": {
+    "message": "사무"
+  },
+  "category_news": {
+    "message": "뉴스"
+  },
+  "category_wiki": {
+    "message": "위키"
+  },
+  "category_other": {
+    "message": "기타"
+  },
+  "calendarSun": {
+    "message": "일"
+  },
+  "calendarMon": {
+    "message": "월"
+  },
+  "calendarTue": {
+    "message": "화"
+  },
+  "calendarWed": {
+    "message": "수"
+  },
+  "calendarThu": {
+    "message": "목"
+  },
+  "calendarFri": {
+    "message": "금"
+  },
+  "calendarSat": {
+    "message": "토"
+  }
+}

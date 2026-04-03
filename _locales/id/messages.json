@@ -1,0 +1,453 @@
+{
+  "extName": {
+    "message": "Pelacak Riwayat & Analitik Browser"
+  },
+  "dashSidebarBrandName": {
+    "message": "Analitik Browser"
+  },
+  "extDescription": {
+    "message": "Visualisasi riwayat: statistik domain, grafik interaktif, ekspor CSV."
+  },
+  "switchToStats": {
+    "message": "Ke statistik"
+  },
+  "switchToHistory": {
+    "message": "Ke riwayat"
+  },
+  "siteCount": {
+    "message": "Situs"
+  },
+  "visitCount": {
+    "message": "Kunjungan"
+  },
+  "searchPlaceholder": {
+    "message": "Cari situs, URL"
+  },
+  "filterAll": {
+    "message": "Semua"
+  },
+  "filterHour": {
+    "message": "Jam"
+  },
+  "filterToday": {
+    "message": "Hari ini"
+  },
+  "filterWeek": {
+    "message": "Minggu"
+  },
+  "filterMonth": {
+    "message": "Bulan"
+  },
+  "exportCsv": {
+    "message": "Ekspor CSV"
+  },
+  "selectDate": {
+    "message": "Pilih tanggal"
+  },
+  "sortByTime": {
+    "message": "Waktu kunjungan"
+  },
+  "sortByVisits": {
+    "message": "Jumlah kunjungan"
+  },
+  "loading": {
+    "message": "Memuat…"
+  },
+  "privacySettings": {
+    "message": "Privasi"
+  },
+  "blacklistLabel": {
+    "message": "Daftar blokir domain (sembunyikan riwayat domain ini)"
+  },
+  "blacklistPlaceholder": {
+    "message": "Masukkan domain, mis. example.com"
+  },
+  "add": {
+    "message": "Tambah"
+  },
+  "remove": {
+    "message": "Hapus"
+  },
+  "trendChartTitle": {
+    "message": "Kunjungan harian (7 hari terakhir)"
+  },
+  "trendByDay": {
+    "message": "Per hari"
+  },
+  "trendByWeek": {
+    "message": "Per minggu"
+  },
+  "hourChartTitle": {
+    "message": "Distribusi waktu kunjungan"
+  },
+  "categoryChartTitle": {
+    "message": "Porsi kunjungan per kategori"
+  },
+  "backToTop": {
+    "message": "Kembali ke atas"
+  },
+  "toggleDarkMode": {
+    "message": "Mode gelap"
+  },
+  "toggleLightMode": {
+    "message": "Mode terang"
+  },
+  "switchLanguage": {
+    "message": "Ganti bahasa"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langChinese": {
+    "message": "简体中文"
+  },
+  "langJapanese": {
+    "message": "日本語"
+  },
+  "langRussian": {
+    "message": "Русский"
+  },
+  "langIndonesian": {
+    "message": "Bahasa Indonesia"
+  },
+  "langArabic": {
+    "message": "العربية"
+  },
+  "langSpanish": {
+    "message": "Español"
+  },
+  "langPortugueseBrazil": {
+    "message": "Português (Brasil)"
+  },
+  "langGerman": {
+    "message": "Deutsch"
+  },
+  "langFrench": {
+    "message": "Français"
+  },
+  "langKorean": {
+    "message": "한국어"
+  },
+  "openGitHub": {
+    "message": "Lihat di GitHub"
+  },
+  "openExtensionPage": {
+    "message": "Halaman ekstensi"
+  },
+  "optionsPageTitle": {
+    "message": "Tentang ekstensi ini"
+  },
+  "optionsVersionLabel": {
+    "message": "Versi"
+  },
+  "optionsLinksHeading": {
+    "message": "Tautan"
+  },
+  "optionsPrivacy": {
+    "message": "Kebijakan privasi"
+  },
+  "optionsFeaturesHeading": {
+    "message": "Fitur"
+  },
+  "optionsFeatDomains": {
+    "message": "Mengelompokkan riwayat per domain akar; favicon; klik untuk melihat URL dan detail."
+  },
+  "optionsFeatStats": {
+    "message": "Jumlah kunjungan, halaman, waktu terakhir, dan batang porsi dalam filter saat ini."
+  },
+  "optionsFeatSort": {
+    "message": "Urutkan berdasarkan kunjungan terbaru atau jumlah kunjungan."
+  },
+  "optionsFeatFilter": {
+    "message": "Filter waktu: Semua, Hari ini, Minggu, Bulan (default Hari ini)."
+  },
+  "optionsFeatCalendar": {
+    "message": "Kalender pilih satu hari; lencana tanggal menunjuk filter aktif—klik untuk kembali ke rentang."
+  },
+  "optionsFeatViews": {
+    "message": "Beralih antara daftar Riwayat dan tampilan Statistik (grafik)."
+  },
+  "optionsFeatTrend": {
+    "message": "Grafik batang tren kunjungan 7 hari terakhir."
+  },
+  "optionsFeatHour": {
+    "message": "Distribusi jam 0–23 dengan kurva halus berdasarkan filter saat ini."
+  },
+  "optionsFeatCategory": {
+    "message": "Diagram lingkaran kategori situs; legenda dan irisan disorot bersama."
+  },
+  "optionsFeatSearch": {
+    "message": "Cari judul, URL, dan domain dalam rentang waktu saat ini."
+  },
+  "optionsFeatExport": {
+    "message": "Ekspor CSV (UTF-8 BOM): judul, domain, kunjungan, halaman, kunjungan terakhir/awal."
+  },
+  "optionsFeatPrivacy": {
+    "message": "Daftar blokir; saran domain saat mengetik; hapus riwayat satu situs."
+  },
+  "optionsFeatTheme": {
+    "message": "Tema terang/gelap. Bahasa disimpan di penyimpanan ekstensi (banyak bahasa)."
+  },
+  "optionsFeatFooter": {
+    "message": "Footer: halaman ekstensi, GitHub, kembali ke atas. Pada build pengembang, menu bahasa mungkin tersedia."
+  },
+  "dashChartsEyebrow": {
+    "message": "Wawasan"
+  },
+  "dashNavHome": {
+    "message": "Analitik"
+  },
+  "dashNavBlacklist": {
+    "message": "Daftar blokir"
+  },
+  "dashNavAbout": {
+    "message": "Tentang"
+  },
+  "dashMenuOpen": {
+    "message": "Buka menu"
+  },
+  "dashSidebarCollapse": {
+    "message": "Ciutkan bilah samping"
+  },
+  "dashSidebarExpand": {
+    "message": "Luaskan bilah samping"
+  },
+  "dashBrowseHistoryTitle": {
+    "message": "Riwayat penelusuran"
+  },
+  "dashHomeTitle": {
+    "message": "Ruang kerja statistik"
+  },
+  "dashAboutFeaturesPreviewHeading": {
+    "message": "Ringkasan fitur"
+  },
+  "dashAboutPermissionsHeading": {
+    "message": "Izin"
+  },
+  "dashPermHistory": {
+    "message": "history — Membaca riwayat untuk statistik; Anda dapat menghapus riwayat situs dari UI."
+  },
+  "dashPermStorage": {
+    "message": "storage — Menyimpan preferensi di perangkat ini saja."
+  },
+  "dashPermFavicon": {
+    "message": "favicon — Memuat ikon situs melalui layanan favicon bawaan browser."
+  },
+  "dashPermDownloads": {
+    "message": "downloads — Menyimpan file CSV saat ekspor."
+  },
+  "dashPermHostGitHub": {
+    "message": "github.com — Hanya saat membuka tautan repositori dari ekstensi."
+  },
+  "dashAboutLicenseHeading": {
+    "message": "Lisensi"
+  },
+  "dashAboutLicenseBody": {
+    "message": "Kode sumber di GitHub. Penggunaan mengikuti berkas lisensi di repositori. Bukan afiliasi Google."
+  },
+  "dashAboutContactHeading": {
+    "message": "Hubungi kami"
+  },
+  "dashAboutContactLink": {
+    "message": "Kirim email"
+  },
+  "dashPageStatus": {
+    "message": "Halaman $1 dari $2 · $3 domain"
+  },
+  "dashUseRegex": {
+    "message": "Regex"
+  },
+  "dashChartDownload": {
+    "message": "Unduh grafik sebagai PNG"
+  },
+  "dashChartsColumnTitle": {
+    "message": "Grafik & tren"
+  },
+  "dashPaginationPrev": {
+    "message": "Sebelumnya"
+  },
+  "dashPaginationNext": {
+    "message": "Berikutnya"
+  },
+  "dashCalendarClose": {
+    "message": "Tutup"
+  },
+  "dashPageSizeLabel": {
+    "message": "Per halaman"
+  },
+  "dashCollapseList": {
+    "message": "Ciutkan daftar situs"
+  },
+  "dashExpandList": {
+    "message": "Luaskan daftar situs"
+  },
+  "dashPageNumbersLabel": {
+    "message": "Nomor halaman"
+  },
+  "noData": {
+    "message": "Tidak ada data"
+  },
+  "trendChartEmpty": {
+    "message": "Tidak ada kunjungan dalam rentang ini. Coba filter lain atau «Semua»."
+  },
+  "hourChartEmpty": {
+    "message": "Distribusi jam berdasarkan kunjungan terfilter"
+  },
+  "dashTrendTitleAll": {
+    "message": "Kunjungan harian"
+  },
+  "dashTrendTitleHour": {
+    "message": "Kunjungan tiap 5 menit (jam terakhir)"
+  },
+  "dashTrendTitleToday": {
+    "message": "Kunjungan per jam hari ini"
+  },
+  "dashTrendTitleWeek": {
+    "message": "Kunjungan per hari (7 hari)"
+  },
+  "dashTrendTitleMonth": {
+    "message": "Kunjungan per hari (30 hari)"
+  },
+  "dashTrendTitlePickDay": {
+    "message": "Kunjungan per jam (hari dipilih)"
+  },
+  "dashHourTitleCalendarDay": {
+    "message": "Kunjungan per jam (hari ini)"
+  },
+  "dashHourTitleFiveMin": {
+    "message": "Jam terakhir per langkah 5 menit"
+  },
+  "dashHourTitleByClock": {
+    "message": "Kunjungan per jam (0–23) dalam rentang"
+  },
+  "dashFiveMinSegment": {
+    "message": "Slot 5 menit ke-$1",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "categoryChartEmpty": {
+    "message": "Kategori dideteksi otomatis dari domain"
+  },
+  "deleteSiteConfirm": {
+    "message": "Hapus semua riwayat untuk $domain$?",
+    "placeholders": {
+      "domain": {
+        "content": "$1"
+      }
+    }
+  },
+  "clearDateFilter": {
+    "message": "Klik untuk hapus filter tanggal"
+  },
+  "timeJustNow": {
+    "message": "Baru saja"
+  },
+  "timeMinutesAgo": {
+    "message": "$1 menit lalu",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeHoursAgo": {
+    "message": "$1 jam lalu",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "timeDaysAgo": {
+    "message": "$1 hari lalu",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "csvHeaders": {
+    "message": "Situs,Domain,Kunjungan,Halaman,Terakhir,Pertama"
+  },
+  "csvFilename": {
+    "message": "browser_history"
+  },
+  "pages": {
+    "message": "$1 halaman",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "visitsCount": {
+    "message": "$1 kunjungan",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "percent": {
+    "message": "$1%",
+    "placeholders": {
+      "1": {
+        "content": "$1"
+      }
+    }
+  },
+  "deleteSiteHistory": {
+    "message": "Hapus riwayat situs"
+  },
+  "category_search": {
+    "message": "Cari"
+  },
+  "category_social": {
+    "message": "Sosial"
+  },
+  "category_video": {
+    "message": "Video"
+  },
+  "category_shopping": {
+    "message": "Belanja"
+  },
+  "category_dev": {
+    "message": "Pengembangan"
+  },
+  "category_office": {
+    "message": "Kantor"
+  },
+  "category_news": {
+    "message": "Berita"
+  },
+  "category_wiki": {
+    "message": "Wiki"
+  },
+  "category_other": {
+    "message": "Lainnya"
+  },
+  "calendarSun": {
+    "message": "Min"
+  },
+  "calendarMon": {
+    "message": "Sen"
+  },
+  "calendarTue": {
+    "message": "Sel"
+  },
+  "calendarWed": {
+    "message": "Rab"
+  },
+  "calendarThu": {
+    "message": "Kam"
+  },
+  "calendarFri": {
+    "message": "Jum"
+  },
+  "calendarSat": {
+    "message": "Sab"
+  }
+}

@@ -12,10 +12,10 @@
       <div class="header-top">
         <h1><img src="icons/icon48.png" alt="" class="header-icon"><span data-i18n="extName"></span></h1>
         <button type="button" class="view-switch-btn" id="view-switch-btn" data-i18n-title="switchToStats">
-          <svg class="icon-chart" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="icon-chart" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 20V10M12 20V4M6 20v-6"/>
           </svg>
-          <svg class="icon-history hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="icon-history hidden" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M12 8v4l2 2"/>
             <circle cx="12" cy="12" r="10"/>
           </svg>
@@ -33,8 +33,9 @@
     </div>
     
     <div class="filter-box">
-      <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
-      <button class="filter-btn" data-filter="today" data-i18n="filterToday">Today</button>
+      <button class="filter-btn" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="filter-btn" data-filter="hour" data-i18n="filterHour">Hour</button>
+      <button class="filter-btn active" data-filter="today" data-i18n="filterToday">Today</button>
       <button class="filter-btn" data-filter="week" data-i18n="filterWeek">Week</button>
       <button class="filter-btn" data-filter="month" data-i18n="filterMonth">Month</button>
     </div>
@@ -93,9 +94,12 @@
         </div>
         <div class="settings-section">
           <label data-i18n="blacklistLabel">Blacklist</label>
-          <div class="blacklist-input-row">
-            <input type="text" id="blacklist-input" data-i18n-placeholder="blacklistPlaceholder">
-            <button type="button" id="blacklist-add" data-i18n="add">Add</button>
+          <div class="blacklist-input-wrap">
+            <div class="blacklist-input-row">
+              <input type="text" id="blacklist-input" data-i18n-placeholder="blacklistPlaceholder" autocomplete="off">
+              <button type="button" id="blacklist-add" data-i18n="add">Add</button>
+            </div>
+            <div id="blacklist-suggestions" class="blacklist-suggestions hidden" role="listbox" aria-label="Domain suggestions"></div>
           </div>
           <ul id="blacklist-list" class="blacklist-list"></ul>
         </div>
@@ -104,24 +108,21 @@
     
     <div id="stats-view" class="view-content hidden">
     <div class="stats-filter-box">
-      <button class="filter-btn active" data-filter="all" data-i18n="filterAll">All</button>
-      <button class="filter-btn" data-filter="today" data-i18n="filterToday">Today</button>
+      <button class="filter-btn" data-filter="all" data-i18n="filterAll">All</button>
+      <button class="filter-btn" data-filter="hour" data-i18n="filterHour">Hour</button>
+      <button class="filter-btn active" data-filter="today" data-i18n="filterToday">Today</button>
       <button class="filter-btn" data-filter="week" data-i18n="filterWeek">Week</button>
       <button class="filter-btn" data-filter="month" data-i18n="filterMonth">Month</button>
     </div>
     <div id="trend-chart" class="trend-chart">
       <div class="trend-chart-header">
-        <span class="trend-chart-title" data-i18n="trendChartTitle">Trend</span>
-        <div class="trend-tabs">
-          <button type="button" class="trend-tab active" data-trend="day" data-i18n="trendByDay">Day</button>
-          <button type="button" class="trend-tab" data-trend="week" data-i18n="trendByWeek">Week</button>
-        </div>
+        <span class="trend-chart-title" id="stats-trend-title"></span>
       </div>
       <div id="trend-chart-bars" class="trend-chart-bars"></div>
     </div>
     
     <div id="hour-chart" class="hour-chart">
-      <div class="hour-chart-title" data-i18n="hourChartTitle">By hour</div>
+      <div class="hour-chart-title" id="stats-hour-title"></div>
       <div id="hour-chart-bars" class="hour-chart-bars"></div>
     </div>
     
@@ -140,7 +141,7 @@
             <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65A.488.488 0 0 0 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.5 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.5 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65z"/>
           </svg>
         </button>
-        <button type="button" class="icon-btn icon-only theme-btn" id="theme-btn" data-i18n-title="toggleDarkMode">
+        <button type="button" class="icon-btn icon-only theme-btn" id="theme-btn" aria-label="Theme">
           <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
@@ -152,10 +153,36 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
         </button>
-        <button type="button" class="icon-btn icon-only lang-btn" id="lang-btn" data-i18n-title="switchLanguage">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="lang-menu-wrap">
+          <button type="button" class="icon-btn icon-only lang-btn" id="lang-btn" data-i18n-title="switchLanguage" aria-expanded="false" aria-haspopup="true" aria-controls="lang-menu">
+            <svg class="lang-icon-glyph" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <text class="lang-icon-letter-a" x="2" y="16.5" font-size="11.5" font-weight="700" fill="currentColor" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">A</text>
+              <text class="lang-icon-letter-han" x="12.5" y="16.5" font-size="10.5" font-weight="600" fill="currentColor" font-family="'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif">文</text>
+            </svg>
+          </button>
+          <div id="lang-menu" class="lang-menu-dropdown hidden" role="menu" aria-labelledby="lang-btn">
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="en" data-i18n="langEnglish">English</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="zh_CN" data-i18n="langChinese">简体中文</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="ja" data-i18n="langJapanese">日本語</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="ru" data-i18n="langRussian">Русский</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="id" data-i18n="langIndonesian">Bahasa Indonesia</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="ar" data-i18n="langArabic">العربية</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="es" data-i18n="langSpanish">Español</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="pt_BR" data-i18n="langPortugueseBrazil">Português (Brasil)</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="de" data-i18n="langGerman">Deutsch</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="fr" data-i18n="langFrench">Français</button>
+            <button type="button" class="lang-menu-item" role="menuitem" data-locale="ko" data-i18n="langKorean">한국어</button>
+          </div>
+        </div>
+        <button type="button" class="icon-btn icon-only extension-page-btn" id="extension-page-btn" data-i18n-title="openExtensionPage" data-i18n-aria-label="openExtensionPage">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/>
             <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </button>
+        <button type="button" class="icon-btn icon-only github-btn" id="github-btn" data-i18n-title="openGitHub" data-i18n-aria-label="openGitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
           </svg>
         </button>
       </div>
@@ -168,6 +195,7 @@
       </div>
   </footer>
   
+  <script src="statsflow-i18n.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

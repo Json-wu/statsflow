@@ -1,3 +1,17 @@
+/**
+ * 开发模式：本地「加载已解压的扩展程序」通常无 update_url；线上商店版带更新地址。
+ * 也可在 manifest 中设置 `"_statsflow_dev": true` 强制视为开发环境。
+ */
+function isStatsflowDevMode() {
+  try {
+    const m = chrome.runtime.getManifest();
+    if (m._statsflow_dev === true) return true;
+    return !m.update_url;
+  } catch {
+    return false;
+  }
+}
+
 // 获取站点域名
 function getDomain(url) {
   try {
@@ -29,7 +43,7 @@ function getSiteCategory(rootDomain) {
 }
 
 // 自定义 i18n：支持运行时切换语言
-let I18N_MESSAGES = { en: {}, zh_CN: {} };
+let I18N_MESSAGES = {};
 let CURRENT_LOCALE = 'en';
 
 function parseChromeMessage(obj, args = []) {
@@ -56,28 +70,32 @@ function t(key, ...args) {
 }
 
 async function loadI18nMessages() {
+  const { LOCALE_IDS } = window.StatsflowI18n;
+  I18N_MESSAGES = {};
   try {
-    const [enRes, zhRes] = await Promise.all([
-      fetch(chrome.runtime.getURL('_locales/en/messages.json')),
-      fetch(chrome.runtime.getURL('_locales/zh_CN/messages.json'))
-    ]);
-    I18N_MESSAGES.en = await enRes.json();
-    I18N_MESSAGES.zh_CN = await zhRes.json();
-  } catch (e) {
-    I18N_MESSAGES.en = {};
-    I18N_MESSAGES.zh_CN = {};
+    await Promise.all(
+      LOCALE_IDS.map(async (id) => {
+        try {
+          const res = await fetch(chrome.runtime.getURL(`_locales/${id}/messages.json`));
+          I18N_MESSAGES[id] = await res.json();
+        } catch {
+          I18N_MESSAGES[id] = {};
+        }
+      })
+    );
+  } catch {
+    LOCALE_IDS.forEach((id) => {
+      I18N_MESSAGES[id] = {};
+    });
   }
 }
 
 function getLocaleForDates() {
-  return CURRENT_LOCALE === 'zh_CN' ? 'zh-CN' : 'en';
+  return window.StatsflowI18n.localeIdToBcp47(CURRENT_LOCALE);
 }
 
 function resolveInitialLocale(browserLang, storedLocale) {
-  if (storedLocale === 'zh_CN' || storedLocale === 'en') return storedLocale;
-  const lang = (browserLang || '').toLowerCase();
-  if (lang.startsWith('zh')) return 'zh_CN';
-  return 'en';
+  return window.StatsflowI18n.resolveLocaleFromBrowser(browserLang || '', storedLocale);
 }
 
 // 获取站点根域名（用于合并）
@@ -106,19 +124,14 @@ function getFaviconUrl(url) {
   }
 }
 
-// 格式化时间
+// 格式化时间（浏览历史列表：月/日 时:分，无年、秒）
 function formatTime(timestamp) {
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diff = now - date;
-  const locale = getLocaleForDates();
-
-  if (diff < 60000) return t('timeJustNow');
-  if (diff < 3600000) return t('timeMinutesAgo', Math.floor(diff / 60000));
-  if (diff < 86400000) return t('timeHoursAgo', Math.floor(diff / 3600000));
-  if (diff < 604800000) return t('timeDaysAgo', Math.floor(diff / 86400000));
-
-  return date.toLocaleDateString(locale);
+  const d = new Date(timestamp);
+  const mo = d.getMonth() + 1;
+  const day = d.getDate();
+  const h = String(d.getHours()).padStart(2, '0');
+  const min = String(d.getMinutes()).padStart(2, '0');
+  return `${mo}/${day} ${h}:${min}`;
 }
 
 // 格式化完整日期
@@ -131,34 +144,111 @@ function formatFullDate(timestamp) {
   });
 }
 
-// 获取时间范围
+const MS_HOUR = 3600000;
+const MS_DAY = 86400000;
+const MS_FIVE_MIN = 5 * 60 * 1000;
+
+// 获取时间范围（与网页看板 dashboard-workspace 一致）
 function getTimeRange(filter, selectedDate = null) {
   const now = Date.now();
-  const day = 86400000;
-  
-  // 选中日期优先：仅该日 00:00:00 至 23:59:59.999
   if (selectedDate) {
     const d = new Date(selectedDate);
     d.setHours(0, 0, 0, 0);
     const startTime = d.getTime();
-    const endTime = startTime + day; // Chrome API endTime 为「早于」该时刻，故用次日 00:00
+    const endTime = startTime + MS_DAY;
     return { startTime, endTime };
   }
-  
   switch (filter) {
-    case 'today':
+    case 'hour':
+      return { startTime: now - MS_HOUR };
+    case 'today': {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       return { startTime: today.getTime() };
+    }
     case 'week':
-      return { startTime: now - 7 * day };
+      return { startTime: now - 7 * MS_DAY };
     case 'month':
-      return { startTime: now - 30 * day };
+      return { startTime: now - 30 * MS_DAY };
     case 'all':
-      return { startTime: 0 };
     default:
       return { startTime: 0 };
   }
+}
+
+function dayKeyFromTime(ts) {
+  const x = new Date(ts);
+  return `${x.getFullYear()}-${x.getMonth()}-${x.getDate()}`;
+}
+
+function buildTrendHourlyDay(items, dayStart, dayEnd) {
+  const buckets = new Array(24).fill(0);
+  items.forEach((item) => {
+    const t = item.lastVisitTime;
+    if (t < dayStart || t >= dayEnd) return;
+    buckets[new Date(t).getHours()] += item.visitCount || 1;
+  });
+  return buckets.map((count, h) => ({ label: String(h), count }));
+}
+
+function buildTrendFiveMin(items, nowMs, localeTag) {
+  const windowStart = nowMs - MS_HOUR;
+  const buckets = new Array(12).fill(0);
+  items.forEach((item) => {
+    const t = item.lastVisitTime;
+    if (t < windowStart || t > nowMs) return;
+    let idx = Math.floor((t - windowStart) / MS_FIVE_MIN);
+    if (idx > 11) idx = 11;
+    if (idx < 0) return;
+    buckets[idx] += item.visitCount || 1;
+  });
+  return buckets.map((count, i) => {
+    const segStart = windowStart + i * MS_FIVE_MIN;
+    const label = new Date(segStart).toLocaleTimeString(localeTag || 'en', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+    return { label, count };
+  });
+}
+
+function buildTrendLastNDays(items, nowMs, nDays) {
+  const buckets = new Array(nDays).fill(0).map(() => ({ label: '', count: 0 }));
+  items.forEach((item) => {
+    const daysAgo = Math.floor((nowMs - item.lastVisitTime) / MS_DAY);
+    if (daysAgo >= 0 && daysAgo < nDays) buckets[nDays - 1 - daysAgo].count += item.visitCount || 1;
+  });
+  for (let i = 0; i < nDays; i++) {
+    const d = new Date(nowMs - (nDays - 1 - i) * MS_DAY);
+    buckets[i].label = `${d.getMonth() + 1}/${d.getDate()}`;
+  }
+  return buckets;
+}
+
+function buildTrendAllDays(items) {
+  const dayMap = new Map();
+  items.forEach((item) => {
+    const dk = dayKeyFromTime(item.lastVisitTime);
+    dayMap.set(dk, (dayMap.get(dk) || 0) + (item.visitCount || 1));
+  });
+  const keys = [...dayMap.keys()].sort((a, b) => {
+    const pa = a.split('-').map(Number);
+    const pb = b.split('-').map(Number);
+    return pa[0] - pb[0] || pa[1] - pb[1] || pa[2] - pb[2];
+  });
+  return keys.map((k) => {
+    const parts = k.split('-').map(Number);
+    return { label: `${parts[1] + 1}/${parts[2]}`, count: dayMap.get(k) };
+  });
+}
+
+function buildHourOfDayAggregate(items) {
+  const h = new Array(24).fill(0);
+  items.forEach((item) => {
+    h[new Date(item.lastVisitTime).getHours()] += item.visitCount || 1;
+  });
+  return h;
 }
 
 // 判断时间戳是否在选中日期当天
@@ -254,39 +344,48 @@ async function getHistoryStats(filter = 'all', searchTerm = '', selectedDate = n
         ...site,
         pageCount: site.urlList.length
       }));
-      
-      // 访问时段分布、访问趋势：使用 sites.urlList（与历史列表同一数据源）
-      const hourDistribution = new Array(24).fill(0);
-      const day = 86400000;
-      const now = Date.now();
-      const dailyTrend = new Array(7).fill(0).map((_, i) => ({ label: '', count: 0 }));
-      const weeklyTrend = new Array(4).fill(0).map((_, i) => ({ label: '', count: 0 }));
-      
-      sites.forEach(site => {
-        (site.urlList || []).forEach(p => {
-          const hour = new Date(p.lastVisitTime).getHours();
-          hourDistribution[hour] += p.visitCount || 1;
-          const t = p.lastVisitTime;
-          const cnt = p.visitCount || 1;
-          const daysAgo = Math.floor((now - t) / day);
-          if (daysAgo >= 0 && daysAgo < 7) {
-            dailyTrend[6 - daysAgo].count += cnt;
+
+      const nowMs = Date.now();
+      const tag = getLocaleForDates();
+      let trendSeries;
+      let hourDistribution;
+
+      if (selectedDate) {
+        const d0 = new Date(selectedDate);
+        d0.setHours(0, 0, 0, 0);
+        const ds = d0.getTime();
+        const de = ds + MS_DAY;
+        trendSeries = buildTrendHourlyDay(filteredItems, ds, de);
+        hourDistribution = trendSeries.map((x) => x.count);
+      } else {
+        switch (filter) {
+          case 'hour':
+            trendSeries = buildTrendFiveMin(filteredItems, nowMs, tag);
+            hourDistribution = trendSeries.map((x) => x.count);
+            break;
+          case 'today': {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const ds = today.getTime();
+            const de = ds + MS_DAY;
+            trendSeries = buildTrendHourlyDay(filteredItems, ds, de);
+            hourDistribution = trendSeries.map((x) => x.count);
+            break;
           }
-          const weeksAgo = Math.floor((now - t) / (7 * day));
-          if (weeksAgo >= 0 && weeksAgo < 4) {
-            weeklyTrend[3 - weeksAgo].count += cnt;
-          }
-        });
-      });
-      
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(now - (6 - i) * day);
-        dailyTrend[i].label = `${d.getMonth() + 1}/${d.getDate()}`;
-      }
-      for (let i = 0; i < 4; i++) {
-        const end = new Date(now - (3 - i) * 7 * day);
-        const start = new Date(end - 6 * day);
-        weeklyTrend[i].label = `${start.getMonth() + 1}/${start.getDate()}-${end.getMonth() + 1}/${end.getDate()}`;
+          case 'week':
+            trendSeries = buildTrendLastNDays(filteredItems, nowMs, 7);
+            hourDistribution = buildHourOfDayAggregate(filteredItems);
+            break;
+          case 'month':
+            trendSeries = buildTrendLastNDays(filteredItems, nowMs, 30);
+            hourDistribution = buildHourOfDayAggregate(filteredItems);
+            break;
+          case 'all':
+          default:
+            trendSeries = buildTrendAllDays(filteredItems);
+            hourDistribution = buildHourOfDayAggregate(filteredItems);
+            break;
+        }
       }
 
       // 网站类别访问量统计
@@ -299,7 +398,7 @@ async function getHistoryStats(filter = 'all', searchTerm = '', selectedDate = n
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
 
-      resolve({ sites, hourDistribution, dailyTrend, weeklyTrend, categoryData });
+      resolve({ sites, hourDistribution, trendSeries, categoryData });
     });
   });
 }
@@ -382,87 +481,293 @@ function sortSites(sites, sortBy) {
   return sorted;
 }
 
-// 渲染访问趋势图
-function renderTrendChart(dailyTrend, weeklyTrend, trendMode = 'day') {
+// 渲染访问趋势图（与网页看板 dash-ws 一致：单一序列，随筛选变化）
+function renderTrendChart(trendSeries) {
   const container = document.getElementById('trend-chart');
   const barsEl = document.getElementById('trend-chart-bars');
   if (!container || !barsEl) return;
-  const data = trendMode === 'week' ? weeklyTrend : dailyTrend;
+  const data = Array.isArray(trendSeries) ? trendSeries : [];
+  const escAttr = (s) =>
+    String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;');
   const total = data.reduce((a, b) => a + b.count, 0);
-  const max = Math.max(...data.map(d => d.count), 1);
-  
-  if (total === 0) {
+  const max = Math.max(...data.map((d) => d.count), 1);
+
+  if (total === 0 || data.length === 0) {
     barsEl.innerHTML = `<div class="chart-empty">${t('noData')}<br><small>${t('trendChartEmpty')}</small></div>`;
   } else {
-    const barHeightPx = 80;
-    barsEl.innerHTML = data.map(d => {
-      const h = Math.max(2, (d.count / max) * barHeightPx);
-      return `<div class="trend-bar-wrap" title="${d.label}: ${t('visitsCount', d.count)}">
+    const barHeightPx = 60;
+    barsEl.innerHTML = data
+      .map((d) => {
+        const h = Math.max(2, (d.count / max) * barHeightPx);
+        const tip = `${d.label}: ${t('visitsCount', d.count)}`;
+        return `<div class="trend-bar-wrap" title="${escAttr(tip)}">
         <div class="trend-bar" style="height: ${h}px"></div>
-        <span class="trend-label">${d.label}</span>
+        <span class="trend-label">${escAttr(d.label)}</span>
       </div>`;
-    }).join('');
+      })
+      .join('');
   }
   container.classList.remove('hidden');
 }
 
-// 渲染访问时段分布
-function renderHourChart(hourDistribution) {
+/** 将多点转为平滑三次贝塞尔路径（Cardinal / Catmull-Rom 近似） */
+function smoothLinePathThroughPoints(points) {
+  if (!points.length) return '';
+  if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
+  if (points.length === 2) {
+    return `M ${points[0].x} ${points[0].y} L ${points[1].x} ${points[1].y}`;
+  }
+  let d = `M ${points[0].x} ${points[0].y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i > 0 ? i - 1 : i];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+    const cp1x = p1.x + (p2.x - p0.x) / 6;
+    const cp1y = p1.y + (p2.y - p0.y) / 6;
+    const cp2x = p2.x - (p3.x - p1.x) / 6;
+    const cp2y = p2.y - (p3.y - p1.y) / 6;
+    d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+  }
+  return d;
+}
+
+// 渲染访问时段分布（与网页看板一致：与 trend 维度对齐，支持 12/24 等点数）
+function renderHourChart(hourDistribution, cachedTrendSeries) {
   const container = document.getElementById('hour-chart');
   const barsEl = document.getElementById('hour-chart-bars');
   if (!container || !barsEl) return;
+  const n = hourDistribution.length;
+  if (n === 0) {
+    barsEl.innerHTML = `<div class="chart-empty">${t('noData')}<br><small>${t('hourChartEmpty')}</small></div>`;
+    container.classList.remove('hidden');
+    return;
+  }
   const total = hourDistribution.reduce((a, b) => a + b, 0);
   const max = Math.max(...hourDistribution, 1);
-  
+
   if (total === 0) {
     barsEl.innerHTML = `<div class="chart-empty">${t('noData')}<br><small>${t('hourChartEmpty')}</small></div>`;
   } else {
-    const barHeightPx = 80;
-    barsEl.innerHTML = hourDistribution.map((count, hour) => {
-      const h = Math.max(2, (count / max) * barHeightPx);
-      return `<div class="hour-bar-wrap" title="${hour}: ${t('visitsCount', count)}">
-        <div class="hour-bar" style="height: ${h}px"></div>
-        <span class="hour-label">${hour}</span>
-      </div>`;
-    }).join('');
+    const W = 480;
+    const H = 112;
+    const padL = 10;
+    const padR = 10;
+    const padT = 8;
+    const padB = 22;
+    const innerW = W - padL - padR;
+    const innerH = H - padT - padB;
+    const baseline = padT + innerH;
+    const denom = Math.max(1, n - 1);
+    const pts = hourDistribution.map((count, i) => ({
+      x: padL + (i / denom) * innerW,
+      y: padT + innerH * (1 - count / max)
+    }));
+    const lineD = smoothLinePathThroughPoints(pts);
+    const areaD =
+      n === 1
+        ? `M ${pts[0].x} ${baseline} L ${pts[0].x} ${pts[0].y} L ${pts[0].x} ${baseline} Z`
+        : `${lineD} L ${pts[n - 1].x} ${baseline} L ${pts[0].x} ${baseline} Z`;
+    const escAttr = (s) =>
+      String(s || '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;');
+    const xAt = (i) => padL + (i / denom) * innerW;
+    const trendLabels =
+      Array.isArray(cachedTrendSeries) && cachedTrendSeries.length === n
+        ? cachedTrendSeries.map((d) => d.label)
+        : null;
+    const hits = hourDistribution
+      .map((count, i) => {
+        const left = i === 0 ? padL : (xAt(i - 1) + xAt(i)) / 2;
+        const right = i === n - 1 ? padL + innerW : (xAt(i) + xAt(i + 1)) / 2;
+        const w = Math.max(1, right - left);
+        let tip;
+        if (n === 12) {
+          const timeLbl = trendLabels ? trendLabels[i] : t('dashFiveMinSegment', i + 1);
+          tip = `${timeLbl} — ${t('visitsCount', count)}`;
+        } else if (n === 24) tip = `${i}:00 — ${t('visitsCount', count)}`;
+        else tip = t('visitsCount', count);
+        return `<rect class="hour-hit-rect" x="${left}" y="0" width="${w}" height="${H}" fill="transparent"><title>${escAttr(tip)}</title></rect>`;
+      })
+      .join('');
+    let tickIdx;
+    if (n === 24) tickIdx = [0, 4, 8, 12, 16, 20, 23];
+    else if (n === 12) tickIdx = [0, 3, 6, 9, 11];
+    else tickIdx = [0, Math.floor(denom / 2), n - 1];
+    const labels = tickIdx
+      .filter((i) => i >= 0 && i < n)
+      .map((i) => {
+        const x = xAt(i);
+        let lbl;
+        if (n === 12 && trendLabels) lbl = trendLabels[i];
+        else if (n === 12) lbl = String(i + 1);
+        else lbl = String(i);
+        return `<text class="hour-axis-label" x="${x}" y="${H - 4}" text-anchor="middle">${escAttr(lbl)}</text>`;
+      })
+      .join('');
+    barsEl.innerHTML = `
+      <svg class="hour-chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <linearGradient id="hourChartAreaFill" x1="0" y1="0" x2="0" y2="1">
+            <stop class="hour-chart-grad-stop0" offset="0%"/>
+            <stop class="hour-chart-grad-stop1" offset="100%"/>
+          </linearGradient>
+        </defs>
+        <path class="hour-area-path" d="${areaD}" fill="url(#hourChartAreaFill)"/>
+        <path class="hour-line-path" d="${lineD}" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        ${hits}
+        ${labels}
+      </svg>`;
   }
   container.classList.remove('hidden');
 }
 
-// 渲染网站类别访问量图表
+const CATEGORY_PIE_COLORS = [
+  '#1a73e8', '#ea4335', '#fbbc04', '#34a853', '#ff6d00', '#9334e6',
+  '#00acc1', '#7cb342', '#e91e63', '#5c6bc0', '#ef6c00', '#9c27b0'
+];
+
+function bindCategoryPieHover(wrap) {
+  if (!wrap) return;
+  const segs = () => wrap.querySelectorAll('.category-pie-seg');
+  const legs = () => wrap.querySelectorAll('.category-pie-legend-item');
+  const apply = (idx) => {
+    segs().forEach((el) => {
+      const i = Number(el.getAttribute('data-pie-index'));
+      el.classList.toggle('is-pie-active', i === idx);
+    });
+    legs().forEach((el) => {
+      const i = Number(el.getAttribute('data-pie-index'));
+      el.classList.toggle('is-pie-active', i === idx);
+    });
+  };
+  const clear = () => {
+    segs().forEach((el) => el.classList.remove('is-pie-active'));
+    legs().forEach((el) => el.classList.remove('is-pie-active'));
+  };
+  wrap.addEventListener('mouseover', (e) => {
+    const seg = e.target.closest('.category-pie-seg');
+    const leg = e.target.closest('.category-pie-legend-item');
+    const node = seg || leg;
+    if (node && wrap.contains(node)) {
+      apply(Number(node.getAttribute('data-pie-index')));
+    }
+  });
+  wrap.addEventListener('mouseleave', () => {
+    clear();
+  });
+}
+
 function renderCategoryChart(categoryData) {
   const container = document.getElementById('category-chart');
   const barsEl = document.getElementById('category-chart-bars');
   if (!container || !barsEl) return;
   const data = Array.isArray(categoryData) ? categoryData : [];
   const total = data.reduce((a, b) => a + b.count, 0);
-  const max = Math.max(...data.map(d => d.count), 1);
+  const cx = 50;
+  const cy = 50;
+  const r = 40;
+
+  const polar = (rad) => [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+  const escAttr = (s) =>
+    String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;');
+  const escHtml = (s) =>
+    String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  const formatPct = (f) => (f * 100).toFixed(1);
 
   if (total === 0 || data.length === 0) {
     barsEl.innerHTML = `<div class="chart-empty">${t('noData')}<br><small>${t('categoryChartEmpty')}</small></div>`;
-  } else {
-    barsEl.innerHTML = data.map(d => {
-      const percent = total > 0 ? Math.round((d.count / total) * 100) : 0;
-      const barWidth = Math.max(4, (d.count / max) * 100);
-      const name = t(d.name);
-      return `<div class="category-bar-row" title="${name}: ${t('visitsCount', d.count)} (${percent}%)">
-        <span class="category-name">${name}</span>
-        <div class="category-bar-wrap">
-          <div class="category-bar" style="width: ${barWidth}%"></div>
-        </div>
-        <span class="category-count">${d.count}</span>
+  } else if (data.length === 1) {
+    const d = data[0];
+    const name = t(d.name);
+    const pct = formatPct(1);
+    const color = CATEGORY_PIE_COLORS[0];
+    const title = `${name}: ${t('visitsCount', d.count)} (${pct}%)`;
+    barsEl.innerHTML = `
+      <div class="category-pie-wrap">
+        <svg class="category-pie-svg" viewBox="0 0 100 100" aria-hidden="true">
+          <g class="category-pie-seg" data-pie-index="0">
+            <circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}"/>
+          </g>
+        </svg>
+        <ul class="category-pie-legend">
+          <li class="category-pie-legend-item" data-pie-index="0" title="${escAttr(title)}">
+            <span class="category-pie-legend-swatch" style="background:${color}"></span>
+            <span class="category-pie-legend-name">${escHtml(name)}</span>
+            <span class="category-pie-legend-pct">${pct}%</span>
+            <span class="category-pie-legend-count">${d.count}</span>
+          </li>
+        </ul>
       </div>`;
-    }).join('');
+  } else {
+    let acc = -Math.PI / 2;
+    const paths = [];
+    const legendItems = [];
+    data.forEach((d, i) => {
+      const frac = d.count / total;
+      const slice = frac * 2 * Math.PI;
+      const name = t(d.name);
+      const pct = formatPct(frac);
+      const color = CATEGORY_PIE_COLORS[i % CATEGORY_PIE_COLORS.length];
+      const title = `${name}: ${t('visitsCount', d.count)} (${pct}%)`;
+      if (slice >= 2 * Math.PI - 1e-6) {
+        paths.push(
+          `<g class="category-pie-seg" data-pie-index="${i}"><circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}"/></g>`
+        );
+      } else {
+        const start = acc;
+        const end = acc + slice;
+        const [x1, y1] = polar(start);
+        const [x2, y2] = polar(end);
+        const large = slice > Math.PI ? 1 : 0;
+        paths.push(
+          `<g class="category-pie-seg" data-pie-index="${i}"><path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${color}"/></g>`
+        );
+        acc = end;
+      }
+      legendItems.push(
+        `<li class="category-pie-legend-item" data-pie-index="${i}" title="${escAttr(title)}">
+          <span class="category-pie-legend-swatch" style="background:${color}"></span>
+          <span class="category-pie-legend-name">${escHtml(name)}</span>
+          <span class="category-pie-legend-pct">${pct}%</span>
+          <span class="category-pie-legend-count">${d.count}</span>
+        </li>`
+      );
+    });
+    barsEl.innerHTML = `
+      <div class="category-pie-wrap">
+        <svg class="category-pie-svg" viewBox="0 0 100 100" aria-label="${escAttr(t('categoryChartTitle'))}">
+          ${paths.join('')}
+        </svg>
+        <ul class="category-pie-legend">${legendItems.join('')}</ul>
+      </div>`;
+  }
+  if (total > 0 && data.length > 0) {
+    const wrap = barsEl.querySelector('.category-pie-wrap');
+    if (wrap) bindCategoryPieHover(wrap);
   }
   container.classList.remove('hidden');
 }
 
 // 渲染历史列表（仅在历史视图显示，不渲染图表）
-function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTrend = null, weeklyTrend = null, trendMode = 'day', renderCharts = false, categoryData = null) {
+function renderHistory(sites, sortBy = 'time', hourDistribution = null, trendSeries = null, renderCharts = false, categoryData = null) {
   const container = document.getElementById('history-list');
   const sortedSites = sortSites(sites, sortBy);
-  if (renderCharts && hourDistribution) renderHourChart(hourDistribution);
-  if (renderCharts && dailyTrend && weeklyTrend) renderTrendChart(dailyTrend, weeklyTrend, trendMode);
+  if (renderCharts && Array.isArray(hourDistribution)) {
+    renderHourChart(hourDistribution, Array.isArray(trendSeries) ? trendSeries : []);
+  }
+  if (renderCharts && Array.isArray(trendSeries)) renderTrendChart(trendSeries);
   if (renderCharts && categoryData) renderCategoryChart(categoryData);
   
   if (sortedSites.length === 0) {
@@ -473,7 +778,11 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
   }
   
   const totalVisits = sortedSites.reduce((sum, site) => sum + site.visitCount, 0);
-  
+  const escH = (s) =>
+    String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const escA = (s) =>
+    String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
   container.innerHTML = sortedSites.map((site) => {
     const percent = totalVisits > 0 ? Math.round((site.visitCount / totalVisits) * 100) : 0;
     const hasPages = site.urlList && site.urlList.length > 0;
@@ -487,7 +796,10 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
         </div>
         <div class="site-info">
           <div class="site-title">${site.title}</div>
-          <div class="site-domain">${site.domain} · ${t('pages', site.pageCount || 1)}</div>
+          <div class="site-domain">
+            <span class="site-domain-host" title="${escA(site.domain)}">${escH(site.domain)}</span>
+            <span class="site-domain-meta"> · ${t('pages', site.pageCount || 1)}</span>
+          </div>
           <div class="visit-bar" title="${t('percent', percent)}">
             <div class="visit-bar-fill" style="width: ${percent}%"></div>
           </div>
@@ -528,7 +840,7 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
       e.stopPropagation();
       const rootDomain = btn.dataset.rootDomain;
       const urlList = siteUrlMap.get(rootDomain);
-      if (!urlList || !confirm(t('deleteSiteConfirm', rootDomain))) return;
+      if (!urlList) return;
       for (const p of urlList) {
         try {
           await chrome.history.deleteUrl({ url: p.url });
@@ -545,9 +857,19 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
       const rootDomain = item.dataset.rootDomain;
       const urlList = siteUrlMap.get(rootDomain);
       if (urlList && urlList.length > 0) {
+        const wasExpanded = item.classList.contains('expanded');
         item.classList.toggle('expanded');
+        const nowExpanded = item.classList.contains('expanded');
+        if (nowExpanded && !wasExpanded) {
+          container.querySelectorAll('.history-item.expanded').forEach((other) => {
+            if (other === item) return;
+            other.classList.remove('expanded');
+            const oIcon = other.querySelector('.expand-icon');
+            if (oIcon) oIcon.textContent = '▾';
+          });
+        }
         const expandIcon = item.querySelector('.expand-icon');
-        if (expandIcon) expandIcon.textContent = item.classList.contains('expanded') ? '▴' : '▾';
+        if (expandIcon) expandIcon.textContent = nowExpanded ? '▴' : '▾';
         let panel = item.querySelector('.page-list');
         if (!panel) {
           panel = document.createElement('div');
@@ -555,9 +877,9 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
           const sortedPages = [...urlList].sort((a, b) => b.lastVisitTime - a.lastVisitTime);
           const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
           panel.innerHTML = sortedPages.map(p => {
-            const title = (p.title || p.url).substring(0, 45) + ((p.title || p.url).length > 45 ? '...' : '');
+            const label = p.title || p.url;
             return `<div class="page-item" data-url="${esc(p.url)}">
-              <span class="page-title" title="${esc(p.url)}">${esc(title)}</span>
+              <span class="page-title" title="${esc(label)}">${esc(label)}</span>
               <span class="page-meta">${t('visitsCount', p.visitCount)} · ${formatTime(p.lastVisitTime)}</span>
             </div>`;
           }).join('');
@@ -569,7 +891,6 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
             });
           });
         }
-        if (expandIcon) expandIcon.textContent = item.classList.contains('expanded') ? '▴' : '▾';
       } else {
         chrome.tabs.create({ url: item.dataset.url });
       }
@@ -577,10 +898,20 @@ function renderHistory(sites, sortBy = 'time', hourDistribution = null, dailyTre
   });
 }
 
+// 主题按钮提示：随当前主题切换为「去暗色」/「去浅色」文案
+function syncThemeToggleI18n() {
+  const btn = document.getElementById('theme-btn');
+  if (!btn) return;
+  const isDark = document.body.classList.contains('dark');
+  const msg = t(isDark ? 'toggleLightMode' : 'toggleDarkMode');
+  btn.title = msg;
+  btn.setAttribute('aria-label', msg);
+}
+
 // 应用 i18n 到静态 HTML 元素
 function applyI18n() {
-  const locale = CURRENT_LOCALE === 'zh_CN' ? 'zh-CN' : 'en';
-  document.documentElement.lang = locale;
+  document.documentElement.lang = window.StatsflowI18n.localeIdToBcp47(CURRENT_LOCALE);
+  document.documentElement.dir = CURRENT_LOCALE === 'ar' ? 'rtl' : 'ltr';
   document.title = t('extName');
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -594,14 +925,25 @@ function applyI18n() {
     const key = el.getAttribute('data-i18n-title');
     if (key) el.title = t(key);
   });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+    const key = el.getAttribute('data-i18n-aria-label');
+    if (key) el.setAttribute('aria-label', t(key));
+  });
   const totalSites = document.getElementById('total-sites');
   const totalVisits = document.getElementById('total-visits');
   if (totalSites) totalSites.textContent = `${t('siteCount')}: 0`;
   if (totalVisits) totalVisits.textContent = `${t('visitCount')}: 0`;
+  syncThemeToggleI18n();
 }
 
 // 初始化
 document.addEventListener('DOMContentLoaded', async () => {
+  const statsflowPopupEmbed = new URLSearchParams(location.search).get('embed') === '1';
+  if (statsflowPopupEmbed) {
+    document.documentElement.classList.add('statsflow-popup-embed');
+    document.body.classList.add('statsflow-popup-embed');
+  }
+
   await loadI18nMessages();
   const { locale: storedLocale } = await new Promise(r => chrome.storage.local.get(['locale'], x => r(x)));
   const browserLang = chrome.i18n.getUILanguage?.() || navigator.language || '';
@@ -611,18 +953,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   applyI18n();
+
+  const statsflowDevMode = isStatsflowDevMode();
+  document.querySelector('.lang-menu-wrap')?.classList.toggle('hidden', !statsflowDevMode && !statsflowPopupEmbed);
+
   let currentView = 'history'; // 'history' | 'stats'
-  let currentFilter = 'all';
+  let currentFilter = 'today';
   let currentSearch = '';
   let currentSort = 'time';
-  let trendMode = 'day';
   let selectedDate = null;
   let calendarYear = new Date().getFullYear();
   let calendarMonth = new Date().getMonth();
   let cachedSites = [];
   let hourlyData = [];
-  let cachedDailyTrend = [];
-  let cachedWeeklyTrend = [];
+  let cachedTrendSeries = [];
   let cachedCategoryData = [];
   
   const historyView = document.getElementById('history-view');
@@ -641,7 +985,43 @@ document.addEventListener('DOMContentLoaded', async () => {
       b.classList.toggle('active', b.dataset.filter === currentFilter);
     });
   };
-  
+
+  const syncLangMenuActive = () => {
+    const menu = document.getElementById('lang-menu');
+    if (!menu) return;
+    menu.querySelectorAll('.lang-menu-item').forEach((btn) => {
+      btn.classList.toggle('is-current', btn.getAttribute('data-locale') === CURRENT_LOCALE);
+    });
+  };
+
+  const closeLangMenu = () => {
+    const lm = document.getElementById('lang-menu');
+    const lb = document.getElementById('lang-btn');
+    lm?.classList.add('hidden');
+    lb?.setAttribute('aria-expanded', 'false');
+  };
+
+  function updateStatsChartTitles() {
+    const trendEl = document.getElementById('stats-trend-title');
+    const hourEl = document.getElementById('stats-hour-title');
+    if (selectedDate) {
+      if (trendEl) trendEl.textContent = t('dashTrendTitlePickDay');
+      if (hourEl) hourEl.textContent = t('hourChartTitle');
+      return;
+    }
+    const trendByFilter = {
+      all: 'dashTrendTitleAll',
+      hour: 'dashTrendTitleHour',
+      today: 'dashTrendTitleToday',
+      week: 'dashTrendTitleWeek',
+      month: 'dashTrendTitleMonth'
+    };
+    if (trendEl) trendEl.textContent = t(trendByFilter[currentFilter] || 'dashTrendTitleToday');
+    if (hourEl) {
+      hourEl.textContent = t(currentFilter === 'hour' ? 'dashTrendTitleHour' : 'hourChartTitle');
+    }
+  }
+
   // 加载数据
   const load = async () => {
     document.getElementById('history-list').innerHTML = `<div class="loading">${t('loading')}</div>`;
@@ -653,22 +1033,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (catEl) catEl.innerHTML = loadingHtml;
     }
     const blacklist = await new Promise(r => chrome.storage.local.get(['blacklist'], x => r(x.blacklist || [])));
-    const { sites, hourDistribution, dailyTrend, weeklyTrend, categoryData } = await getHistoryStats(
+    const { sites, hourDistribution, trendSeries, categoryData } = await getHistoryStats(
       currentFilter, currentSearch, selectedDate, false, blacklist
     );
     cachedSites = sites;
     hourlyData = hourDistribution;
-    cachedDailyTrend = dailyTrend;
-    cachedWeeklyTrend = weeklyTrend;
+    cachedTrendSeries = trendSeries || [];
     cachedCategoryData = categoryData || [];
     const renderCharts = currentView === 'stats';
-    renderHistory(cachedSites, currentSort, hourDistribution, dailyTrend, weeklyTrend, trendMode, renderCharts, categoryData);
+    renderHistory(cachedSites, currentSort, hourDistribution, cachedTrendSeries, renderCharts, categoryData);
     if (currentView === 'stats') {
-      syncStatsFilterActive();
-      renderTrendChart(cachedDailyTrend, cachedWeeklyTrend, trendMode);
-      renderHourChart(hourlyData);
+      if (!selectedDate) syncStatsFilterActive();
+      updateStatsChartTitles();
     }
     updateDateBadge();
+    if (!selectedDate) syncHistoryFilterActive();
   };
   window.loadHistory = load;
   
@@ -686,6 +1065,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   
   await load();
+  syncLangMenuActive();
+
+  async function applyLocaleChange(newLocale) {
+    closeLangMenu();
+    if (!window.StatsflowI18n.isSupportedLocale(newLocale)) return;
+    if (newLocale === CURRENT_LOCALE) return;
+    CURRENT_LOCALE = newLocale;
+    await new Promise((r) => chrome.storage.local.set({ locale: CURRENT_LOCALE }, r));
+    applyI18n();
+    syncLangMenuActive();
+    viewSwitchBtn.title = currentView === 'history' ? t('switchToStats') : t('switchToHistory');
+    await load();
+    if (calendarYear !== undefined && calendarMonth !== undefined) {
+      const datesWithVisits = await getDatesWithVisits(calendarYear, calendarMonth);
+      renderCalendar(calendarYear, calendarMonth, datesWithVisits);
+    }
+  }
   
   // 视图切换
   const scrollContainer = document.querySelector('.container');
@@ -745,17 +1141,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.querySelectorAll('.sort-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       currentSort = tab.dataset.sort;
-      renderHistory(cachedSites, currentSort, hourlyData, cachedDailyTrend, cachedWeeklyTrend, trendMode);
-    });
-  });
-  
-  // 趋势图切换
-  document.querySelectorAll('.trend-tab').forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      document.querySelectorAll('.trend-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      trendMode = tab.dataset.trend;
-      renderTrendChart(cachedDailyTrend, cachedWeeklyTrend, trendMode);
+      renderHistory(cachedSites, currentSort, hourlyData, cachedTrendSeries, false, cachedCategoryData);
     });
   });
   
@@ -763,9 +1149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('date-badge').addEventListener('click', async () => {
     if (selectedDate) {
       selectedDate = null;
-      currentFilter = 'all';
-      document.querySelectorAll('#history-view .filter-btn').forEach(b => b.classList.remove('active'));
-      document.querySelector('#history-view .filter-btn[data-filter="all"]').classList.add('active');
+      currentFilter = 'today';
       await load();
     }
   });
@@ -827,7 +1211,74 @@ document.addEventListener('DOMContentLoaded', async () => {
   const blacklistInput = document.getElementById('blacklist-input');
   const blacklistAdd = document.getElementById('blacklist-add');
   const blacklistList = document.getElementById('blacklist-list');
-  
+  const blacklistSuggestionsEl = document.getElementById('blacklist-suggestions');
+  let blacklistSuggestionsTimer = null;
+
+  const escapeAttrDom = (s) =>
+    String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+
+  const hideBlacklistSuggestions = () => {
+    if (!blacklistSuggestionsEl) return;
+    blacklistSuggestionsEl.classList.add('hidden');
+    blacklistSuggestionsEl.innerHTML = '';
+  };
+
+  const updateBlacklistSuggestions = () => {
+    if (!blacklistSuggestionsEl || !blacklistInput) return;
+    const q = blacklistInput.value.trim().toLowerCase();
+    if (!q) {
+      hideBlacklistSuggestions();
+      return;
+    }
+    const matches = [];
+    const seen = new Set();
+    for (const s of cachedSites) {
+      const rd = (s.rootDomain || '').toLowerCase();
+      const dom = (s.domain || '').toLowerCase();
+      if (!rd) continue;
+      if (rd.includes(q) || dom.includes(q)) {
+        if (!seen.has(rd)) {
+          seen.add(rd);
+          matches.push(rd);
+          if (matches.length >= 20) break;
+        }
+      }
+    }
+    if (matches.length === 0) {
+      hideBlacklistSuggestions();
+      return;
+    }
+    blacklistSuggestionsEl.innerHTML = matches
+      .map(
+        (rd) =>
+          `<button type="button" class="blacklist-suggestion-item" data-domain="${escapeAttrDom(rd)}">${escapeAttrDom(rd)}</button>`
+      )
+      .join('');
+    blacklistSuggestionsEl.classList.remove('hidden');
+  };
+
+  blacklistInput.addEventListener('input', () => {
+    clearTimeout(blacklistSuggestionsTimer);
+    blacklistSuggestionsTimer = setTimeout(updateBlacklistSuggestions, 120);
+  });
+
+  blacklistInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideBlacklistSuggestions();
+  });
+
+  if (blacklistSuggestionsEl) {
+    blacklistSuggestionsEl.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.blacklist-suggestion-item')) e.preventDefault();
+    });
+    blacklistSuggestionsEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.blacklist-suggestion-item');
+      if (!btn) return;
+      blacklistInput.value = (btn.dataset.domain || '').toLowerCase();
+      hideBlacklistSuggestions();
+      blacklistInput.focus();
+    });
+  }
+
   const renderBlacklist = async () => {
     const { blacklist } = await new Promise(r => chrome.storage.local.get(['blacklist'], x => r(x)));
     const list = blacklist || [];
@@ -847,11 +1298,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   settingsBtn.addEventListener('click', async () => {
     await renderBlacklist();
+    hideBlacklistSuggestions();
     settingsOverlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => blacklistInput.focus());
+    });
   });
-  
-  document.getElementById('settings-close').addEventListener('click', () => settingsOverlay.classList.add('hidden'));
-  settingsOverlay.addEventListener('click', (e) => { if (e.target === settingsOverlay) settingsOverlay.classList.add('hidden'); });
+
+  document.getElementById('settings-close').addEventListener('click', () => {
+    settingsOverlay.classList.add('hidden');
+    hideBlacklistSuggestions();
+  });
+  settingsOverlay.addEventListener('click', (e) => {
+    if (e.target === settingsOverlay) {
+      settingsOverlay.classList.add('hidden');
+      hideBlacklistSuggestions();
+    }
+  });
   
   blacklistAdd.addEventListener('click', async () => {
     const domain = blacklistInput.value.trim().toLowerCase();
@@ -862,6 +1325,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       list.push(domain);
       await new Promise(r => chrome.storage.local.set({ blacklist: list }, r));
       blacklistInput.value = '';
+      hideBlacklistSuggestions();
       renderBlacklist();
       load();
     }
@@ -883,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const filename = `${t('csvFilename')}_${new Date().toISOString().slice(0, 10)}.csv`;
-    chrome.downloads.download({ url, filename, saveAs: true });
+    chrome.downloads.download({ url, filename, saveAs: false });
     URL.revokeObjectURL(url);
   });
   
@@ -895,6 +1359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const isDark = document.body.classList.contains('dark');
     if (iconMoon) iconMoon.classList.toggle('hidden', isDark);
     if (iconSun) iconSun.classList.toggle('hidden', !isDark);
+    syncThemeToggleI18n();
   };
   chrome.storage.local.get(['darkMode'], (r) => {
     if (r.darkMode !== undefined) {
@@ -912,24 +1377,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.local.set({ darkMode: isDark });
   });
 
-  // 语言切换
-  const langBtn = document.getElementById('lang-btn');
-  langBtn?.addEventListener('click', async () => {
-    CURRENT_LOCALE = CURRENT_LOCALE === 'zh_CN' ? 'en' : 'zh_CN';
-    await new Promise(r => chrome.storage.local.set({ locale: CURRENT_LOCALE }, r));
-    applyI18n();
-    viewSwitchBtn.title = currentView === 'history' ? t('switchToStats') : t('switchToHistory');
-    if (langBtn) langBtn.title = t('switchLanguage');
-    updateDateBadge();
-    renderHistory(cachedSites, currentSort, hourlyData, cachedDailyTrend, cachedWeeklyTrend, trendMode, currentView === 'stats', cachedCategoryData);
-    if (currentView === 'stats') {
-      renderTrendChart(cachedDailyTrend, cachedWeeklyTrend, trendMode);
-      renderHourChart(hourlyData);
-      renderCategoryChart(cachedCategoryData);
+  // 语言菜单（仅开发模式）、GitHub、扩展说明页
+  if (statsflowDevMode) {
+    const langBtn = document.getElementById('lang-btn');
+    const langMenu = document.getElementById('lang-menu');
+    langBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = langMenu?.classList.toggle('hidden') === false;
+      langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.addEventListener('click', () => {
+      closeLangMenu();
+    });
+    langMenu?.querySelectorAll('.lang-menu-item').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const loc = btn.getAttribute('data-locale');
+        if (loc) applyLocaleChange(loc);
+      });
+    });
+  }
+  document.getElementById('github-btn')?.addEventListener('click', () => {
+    chrome.tabs.create({ url: 'https://github.com/Json-wu/statsflow' });
+  });
+  document.getElementById('extension-page-btn')?.addEventListener('click', () => {
+    if (statsflowPopupEmbed) return;
+    chrome.tabs.create({ url: chrome.runtime.getURL('dashboard.html') });
+  });
+
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') return;
+    if (changes.locale) {
+      const v = changes.locale.newValue;
+      if (window.StatsflowI18n.isSupportedLocale(v) && v !== CURRENT_LOCALE) {
+        void applyLocaleChange(v);
+      }
     }
-    if (calendarYear !== undefined && calendarMonth !== undefined) {
-      const datesWithVisits = await getDatesWithVisits(calendarYear, calendarMonth);
-      renderCalendar(calendarYear, calendarMonth, datesWithVisits);
+    if (changes.darkMode) {
+      const d = changes.darkMode.newValue;
+      if (d === true) document.body.classList.add('dark');
+      else if (d === false) document.body.classList.remove('dark');
+      else {
+        document.body.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
+      }
+      updateThemeIcon();
+    }
+    if (changes.blacklist) {
+      void load();
+      void renderBlacklist();
     }
   });
 
