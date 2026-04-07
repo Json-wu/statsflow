@@ -33,6 +33,7 @@
   "switchLanguage": { "message": "切换语言" },
   "langEnglish": { "message": "English" },
   "langChinese": { "message": "简体中文" },
+  "langChineseTraditional": { "message": "繁体中文" },
   "langJapanese": { "message": "日本語" },
   "langRussian": { "message": "Русский" },
   "langIndonesian": { "message": "Bahasa Indonesia" },

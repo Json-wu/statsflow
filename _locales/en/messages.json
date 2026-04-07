@@ -33,6 +33,7 @@
   "switchLanguage": { "message": "Switch language" },
   "langEnglish": { "message": "English" },
   "langChinese": { "message": "Chinese (Simplified)" },
+  "langChineseTraditional": { "message": "Chinese (Traditional)" },
   "langJapanese": { "message": "Japanese" },
   "langRussian": { "message": "Russian" },
   "langIndonesian": { "message": "Indonesian" },

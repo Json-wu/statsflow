@@ -45,7 +45,14 @@ const OPTIONS_FEATURE_KEYS = [
 ];
 
 (async function init() {
-  const { LOCALE_IDS, resolveLocaleFromBrowser, localeIdToBcp47, isSupportedLocale } = window.StatsflowI18n;
+  const {
+    LOCALE_IDS,
+    resolveLocaleFromBrowser,
+    localeIdToBcp47,
+    isSupportedLocale,
+    getLocaleMenuOrder,
+    LOCALE_LABEL_KEYS
+  } = window.StatsflowI18n;
 
   const msgs = {};
   try {
@@ -144,7 +151,22 @@ const OPTIONS_FEATURE_KEYS = [
     }
 
     const langSelect = document.getElementById('dash-lang');
-    if (langSelect) langSelect.value = loc;
+    if (langSelect) {
+      const order = getLocaleMenuOrder();
+      if (langSelect.options.length !== order.length) {
+        langSelect.innerHTML = '';
+        order.forEach((id) => {
+          const opt = document.createElement('option');
+          opt.value = id;
+          langSelect.appendChild(opt);
+        });
+      }
+      order.forEach((id, i) => {
+        const key = LOCALE_LABEL_KEYS[id];
+        if (langSelect.options[i]) langSelect.options[i].textContent = tr(key);
+      });
+      langSelect.value = loc;
+    }
     syncDashSidebarCollapseUi();
     syncDashThemeLabels();
   }

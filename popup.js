@@ -90,6 +90,23 @@ async function loadI18nMessages() {
   }
 }
 
+function buildLangMenu() {
+  const menu = document.getElementById('lang-menu');
+  if (!menu) return;
+  const { getLocaleMenuOrder, LOCALE_LABEL_KEYS } = window.StatsflowI18n;
+  menu.innerHTML = '';
+  for (const id of getLocaleMenuOrder()) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'lang-menu-item';
+    btn.setAttribute('role', 'menuitem');
+    btn.setAttribute('data-locale', id);
+    btn.setAttribute('data-i18n', LOCALE_LABEL_KEYS[id]);
+    btn.textContent = t(LOCALE_LABEL_KEYS[id]);
+    menu.appendChild(btn);
+  }
+}
+
 function getLocaleForDates() {
   return window.StatsflowI18n.localeIdToBcp47(CURRENT_LOCALE);
 }
@@ -952,6 +969,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.local.set({ locale: CURRENT_LOCALE });
   }
 
+  buildLangMenu();
   applyI18n();
 
   const statsflowDevMode = isStatsflowDevMode();
@@ -1377,8 +1395,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.storage.local.set({ darkMode: isDark });
   });
 
-  // 语言菜单（仅开发模式）、GitHub、扩展说明页
-  if (statsflowDevMode) {
+  // 语言菜单（开发模式或 embed）、GitHub、扩展说明页
+  if (statsflowDevMode || statsflowPopupEmbed) {
     const langBtn = document.getElementById('lang-btn');
     const langMenu = document.getElementById('lang-menu');
     langBtn?.addEventListener('click', (e) => {
@@ -1389,12 +1407,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('click', () => {
       closeLangMenu();
     });
-    langMenu?.querySelectorAll('.lang-menu-item').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const loc = btn.getAttribute('data-locale');
-        if (loc) applyLocaleChange(loc);
-      });
+    langMenu?.addEventListener('click', (e) => {
+      const item = e.target.closest('.lang-menu-item');
+      if (!item) return;
+      e.stopPropagation();
+      const loc = item.getAttribute('data-locale');
+      if (loc) void applyLocaleChange(loc);
     });
   }
   document.getElementById('github-btn')?.addEventListener('click', () => {
