@@ -768,6 +768,34 @@
         container.innerHTML = html;
       }
 
+      /** 日历弹层锚定在日历按钮右下侧，必要时向左/向上翻转以免裁切视口 */
+      function positionDashWsCalendarPopup() {
+        const btn = el('dash-ws-cal-btn');
+        const overlay = el('dash-ws-cal-overlay');
+        const popup = overlay?.querySelector('.dash-ws-cal-popup');
+        if (!btn || !popup) return;
+        const rect = btn.getBoundingClientRect();
+        const gap = 8;
+        const vw = document.documentElement.clientWidth;
+        const vh = document.documentElement.clientHeight;
+        void popup.offsetHeight;
+        const w = popup.offsetWidth;
+        const h = popup.offsetHeight;
+        let left = rect.right;
+        if (left + w > vw - gap) {
+          left = Math.max(gap, rect.right - w);
+        }
+        if (left + w > vw - gap) {
+          left = Math.max(gap, vw - w - gap);
+        }
+        let top = rect.bottom + gap;
+        if (top + h > vh - gap) {
+          top = Math.max(gap, rect.top - h - gap);
+        }
+        popup.style.left = `${Math.round(left)}px`;
+        popup.style.top = `${Math.round(top)}px`;
+      }
+
       function syncFilterButtons() {
         document.querySelectorAll('#dash-ws-overview-filters .dash-ws-filter-btn').forEach((b) => {
           b.classList.toggle('active', !selectedDate && b.dataset.filter === currentFilter);
@@ -1214,9 +1242,10 @@
         syncSortTabs();
         const overlay = el('dash-ws-cal-overlay');
         if (overlay && !overlay.classList.contains('hidden')) {
-          void getDatesWithVisits(calendarYear, calendarMonth).then((dates) =>
-            renderCalendar(calendarYear, calendarMonth, dates)
-          );
+          void getDatesWithVisits(calendarYear, calendarMonth).then((dates) => {
+            renderCalendar(calendarYear, calendarMonth, dates);
+            positionDashWsCalendarPopup();
+          });
         }
       }
 
@@ -1228,9 +1257,18 @@
 
       async function openCalendar() {
         const overlay = el('dash-ws-cal-overlay');
+        if (selectedDate) {
+          const d = new Date(selectedDate);
+          calendarYear = d.getFullYear();
+          calendarMonth = d.getMonth();
+        } else {
+          calendarYear = new Date().getFullYear();
+          calendarMonth = new Date().getMonth();
+        }
         overlay.classList.remove('hidden');
         const dates = await getDatesWithVisits(calendarYear, calendarMonth);
         renderCalendar(calendarYear, calendarMonth, dates);
+        positionDashWsCalendarPopup();
       }
 
       function bindChartDownloadButtons() {
@@ -1315,6 +1353,7 @@
         }
         const dates = await getDatesWithVisits(calendarYear, calendarMonth);
         renderCalendar(calendarYear, calendarMonth, dates);
+        positionDashWsCalendarPopup();
       });
       el('dash-ws-cal-next').addEventListener('click', async () => {
         calendarMonth++;
@@ -1324,6 +1363,7 @@
         }
         const dates = await getDatesWithVisits(calendarYear, calendarMonth);
         renderCalendar(calendarYear, calendarMonth, dates);
+        positionDashWsCalendarPopup();
       });
       el('dash-ws-cal-days').addEventListener('click', async (e) => {
         const day = e.target.closest('.dash-ws-cal-day');

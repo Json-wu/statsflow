@@ -1085,18 +1085,17 @@ body.dark .dash-ws-stat-circle {
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .dash-ws-cal-popup {
+  position: absolute;
   background: var(--dash-surface);
   border: 1px solid var(--dash-border);
   border-radius: var(--dash-radius);
   padding: 18px;
+  min-width: 280px;
   max-width: 340px;
-  width: 92%;
+  width: max-content;
   box-shadow: var(--dash-shadow-lg);
 }
 
